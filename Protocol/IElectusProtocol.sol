@@ -8,6 +8,7 @@ contract IElectusProtocol {
     event Assigned(address to);
     event Revoked(address to);
 
+    function isCurrentMember(address to) public view returns (bool);
     function getAddressAtIndex(uint256 index) public view returns (address);
     function assign(address to) public;
     function revoke(address to) public;
