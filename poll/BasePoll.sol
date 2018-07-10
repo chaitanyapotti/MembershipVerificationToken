@@ -2,9 +2,10 @@ pragma solidity ^0.4.24;
 
 import "../math/SafeMath.sol";
 import "../token/IERC20Token.sol";
+import "../Protocol/IElectusProtocol.sol";
 
 
-contract BasePoll is SafeMath {
+contract BasePoll is SafeMath, IElectusProtocol {
     struct Vote {
         uint256 time;
         uint256 weight;
@@ -18,7 +19,7 @@ contract BasePoll is SafeMath {
 
     uint256 public startTime;
     uint256 public endTime;
-    bool checkTransfersAfterEnd;
+    bool private checkTransfersAfterEnd;
 
     uint256 public yesCounter = 0;
     uint256 public noCounter = 0;
@@ -43,8 +44,9 @@ contract BasePoll is SafeMath {
      * @param _fundAddress Fund contract address
      * @param _startTime Poll start time
      * @param _endTime Poll end time
-     */
-    constructor (address _tokenAddress, address _fundAddress, uint256 _startTime, uint256 _endTime, bool _checkTransfersAfterEnd) public {
+    */
+    constructor (address _tokenAddress, address _fundAddress, uint256 _startTime, uint256 _endTime, 
+    bool _checkTransfersAfterEnd) public {
         require(_tokenAddress != address(0));
         require(_startTime >= now && _endTime > _startTime);
 
@@ -61,13 +63,14 @@ contract BasePoll is SafeMath {
      * @param agree True if user endorses the proposal else False
      */
     function vote(bool agree) public checkTime {
+        require(isCurrentMember(msg.sender));
         require(votesByAddress[msg.sender].time == 0);
 
         uint256 voiceWeight = token.balanceOf(msg.sender);
         uint256 maxVoiceWeight = safeDiv(token.totalSupply(), MAX_TOKENS_WEIGHT_DENOM);
         voiceWeight = voiceWeight <= maxVoiceWeight ? voiceWeight : maxVoiceWeight;
 
-        if(agree) {
+        if (agree) {
             yesCounter = safeAdd(yesCounter, voiceWeight);
         } else {
             noCounter = safeAdd(noCounter, voiceWeight);
@@ -85,6 +88,7 @@ contract BasePoll is SafeMath {
      * @dev Revoke user`s vote
      */
     function revokeVote() public checkTime {
+        require(isCurrentMember(msg.sender));
         require(votesByAddress[msg.sender].time > 0);
 
         uint256 voiceWeight = votesByAddress[msg.sender].weight;
@@ -95,49 +99,18 @@ contract BasePoll is SafeMath {
         votesByAddress[msg.sender].agree = false;
 
         totalVoted = safeSub(totalVoted, 1);
-        if(agree) {
+        if (agree) {
             yesCounter = safeSub(yesCounter, voiceWeight);
         } else {
             noCounter = safeSub(noCounter, voiceWeight);
         }
-    }
-
-    /**
-     * @dev Function is called after token transfer from user`s wallet to check and correct user`s vote
-     *
-     */
-    function onTokenTransfer(address tokenHolder, uint256 amount) public {
-        require(msg.sender == fundAddress);
-        if(votesByAddress[tokenHolder].time == 0) {
-            return;
-        }
-        if(!checkTransfersAfterEnd) {
-            if(finalized || (now < startTime || now > endTime)) {
-                return;
-             }
-        }
-
-        if(token.balanceOf(tokenHolder) >= votesByAddress[tokenHolder].weight) {
-            return;
-        }
-        uint256 voiceWeight = amount;
-        if(amount > votesByAddress[tokenHolder].weight) {
-            voiceWeight = votesByAddress[tokenHolder].weight;
-        }
-
-        if(votesByAddress[tokenHolder].agree) {
-            yesCounter = safeSub(yesCounter, voiceWeight);
-        } else {
-            noCounter = safeSub(noCounter, voiceWeight);
-        }
-        votesByAddress[tokenHolder].weight = safeSub(votesByAddress[tokenHolder].weight, voiceWeight);
     }
 
     /**
      * Finalize poll and call onPollFinish callback with result
      */
     function tryToFinalize() public notFinalized returns(bool) {
-        if(now < endTime) {
+        if (now < endTime) {
             return false;
         }
         finalized = true;

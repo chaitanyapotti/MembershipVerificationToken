@@ -1,8 +1,9 @@
 pragma solidity ^0.4.24;
 
-import "../Token/ElectusProtocol.sol";
+import "../Protocol/IElectusProtocol.sol";
 
-contract ConstantPoll is ElectusProtocol {
+
+contract ConstantPoll is IElectusProtocol {
 
     struct Proposal {
         bytes32 name;
@@ -31,7 +32,8 @@ contract ConstantPoll is ElectusProtocol {
         }
     }
 
-    function vote(uint proposal) public isCurrentHolder {
+    function vote(uint proposal) public {
+        require(isCurrentMember(msg.sender));
         Voter storage sender = voters[msg.sender];
         require(!sender.voted, "Already voted.");
         sender.voted = true;

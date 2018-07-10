@@ -1,10 +1,10 @@
 pragma solidity ^0.4.24;
 
-import "../Token/ElectusProtocol.sol";
+import "../Protocol/IElectusProtocol.sol";
 import "../Token/ERC20Token.sol";
 
 
-contract WeightedPoll is ElectusProtocol, ERC20Token {
+contract WeightedPoll is IElectusProtocol, ERC20Token {
 
     struct Proposal {
         bytes32 name;
@@ -33,7 +33,8 @@ contract WeightedPoll is ElectusProtocol, ERC20Token {
         }
     }
 
-    function vote(uint proposal) public isCurrentHolder {
+    function vote(uint proposal) public {
+        require(isCurrentMember(msg.sender));
         Voter storage sender = voters[msg.sender];
         require(!sender.voted, "Already voted.");
         sender.voted = true;
