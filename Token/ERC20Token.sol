@@ -3,6 +3,7 @@ pragma solidity ^0.4.24;
 import "./IERC20Token.sol";
 import "../math/SafeMath.sol";
 
+
 contract ERC20Token is IERC20Token, SafeMath {
     mapping (address => uint256) public balances;
     mapping (address => mapping (address => uint256)) public allowed;
@@ -11,7 +12,7 @@ contract ERC20Token is IERC20Token, SafeMath {
         return totalSupply;
     }
 
-    uint256 public cap = safeDiv(5,1000);
+    uint256 public cap = safeDiv(5, 1000);
 
     function transfer(address _to, uint256 _value) public returns (bool) {
         require(_to != address(0));
