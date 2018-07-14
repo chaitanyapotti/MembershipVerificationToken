@@ -13,8 +13,10 @@ and is designed to target the Ethereum Virtual Machine (EVM).
 Solidity is statically typed, supports inheritance, libraries and complex
 user-defined types among other features.
 
+Electus Protocol makes use of solidity to create a basic token for membership. The token is non-transferable and revokable.
+
 As you will see, it is possible to create contracts for voting,
-crowdfunding, blind auctions, multi-signature wallets and more.
+whitelisting, multi-signature wallets and more using Electus Protocol.
 
 .. note::
     The best way to try out Solidity right now is using
