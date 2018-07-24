@@ -6,7 +6,7 @@ contract Ownable {
     address public owner;
 
     modifier onlyOwner {
-        require(isOwner(msg.sender));
+        require(isOwner(msg.sender), "Not enough rights");
         _;
     }
 

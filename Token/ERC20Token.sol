@@ -4,7 +4,9 @@ import "./IERC20Token.sol";
 import "../math/SafeMath.sol";
 
 
-contract ERC20Token is IERC20Token, SafeMath {
+//generic implementation of ERC20 Token
+contract ERC20Token is IERC20Token {
+
     mapping (address => uint256) public balances;
     mapping (address => mapping (address => uint256)) public allowed;
 
@@ -12,14 +14,12 @@ contract ERC20Token is IERC20Token, SafeMath {
         return totalSupply;
     }
 
-    uint256 public cap = safeDiv(5, 1000);
-
     function transfer(address _to, uint256 _value) public returns (bool) {
         require(_to != address(0));
         require(balances[msg.sender] >= _value);
 
-        balances[msg.sender] = safeSub(balances[msg.sender], _value);
-        balances[_to] = safeAdd(balances[_to], _value);
+        balances[msg.sender] = SafeMath.safeSub(balances[msg.sender], _value);
+        balances[_to] = SafeMath.safeAdd(balances[_to], _value);
         emit Transfer(msg.sender, _to, _value);
         return true;
     }
@@ -28,9 +28,9 @@ contract ERC20Token is IERC20Token, SafeMath {
         require(_to != address(0));
         require(balances[_from] >= _value && allowed[_from][msg.sender] >= _value);
 
-        balances[_to] = safeAdd(balances[_to], _value);
-        balances[_from] = safeSub(balances[_from], _value);
-        allowed[_from][msg.sender] = safeSub(allowed[_from][msg.sender], _value);
+        balances[_to] = SafeMath.safeAdd(balances[_to], _value);
+        balances[_from] = SafeMath.safeSub(balances[_from], _value);
+        allowed[_from][msg.sender] = SafeMath.safeSub(allowed[_from][msg.sender], _value);
         emit Transfer(_from, _to, _value);
         return true;
     }

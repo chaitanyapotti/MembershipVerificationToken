@@ -1,6 +1,7 @@
 pragma solidity ^0.4.24;
 
 
+//This is an abstract function. Not an interface
 contract IERC20Token {
     string public name;
     string public symbol;

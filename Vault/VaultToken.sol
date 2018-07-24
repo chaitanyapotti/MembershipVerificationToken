@@ -2,10 +2,9 @@ pragma solidity ^0.4.24;
 
 import "../Protocol/IElectusProtocol.sol";
 import "../Ownership/Ownable.sol";
-import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
 
 
-contract VaultToken is IElectusProtocol, Ownable, usingOraclize {    
+contract VaultToken is IElectusProtocol, Ownable {    
 
     mapping (address => uint256) public currentHolders;
 
@@ -28,24 +27,13 @@ contract VaultToken is IElectusProtocol, Ownable, usingOraclize {
         return indexers[index];
     }
 
-    function __callback(bytes32 myid, string result) {
-        if (msg.sender != oraclize_cbAddress()) revert();
-        //todo: something with result;
-        require(uniqueIds[result] != 0x0);
+    function assignMembership(address to) public payable {
+        require(currentHolders[to] != 1, "The user is a current member");
+        //Optional ToDo: Call API smart contract to verify ID
         currentHolders[to] = 1;
         indexers[topIndex] = to;
         topIndex++;
         emit Assigned(to);
-    }
-
-    function assignMembership(address to) public payable {
-        require(currentHolders[to] != 1, "The user is a current member");
-        if (oraclize_getPrice("URL") > this.balance) {
-            LogNewOraclizeQuery("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
-        } else {
-            LogNewOraclizeQuery("Oraclize query was sent, standing by for the answer..");
-            oraclize_query("URL", "json(//TODO:API).Value");
-        }
     }
 
     function revokeMembership(address to) public {

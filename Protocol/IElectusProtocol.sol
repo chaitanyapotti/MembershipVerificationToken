@@ -1,15 +1,15 @@
 pragma solidity ^0.4.24;
 
 
-contract IElectusProtocol {
-    string public name;
-    string public symbol;
-
+//All other contracts must use a 1300 token which implements this protocol - only reference
+interface IElectusProtocol {
     event Assigned(address to);
     event Revoked(address to);
-
-    function isCurrentMember(address to) public view returns (bool);
-    function getAddressAtIndex(uint256 index) public view returns (address);
-    function assign(address to) public;
-    function revoke(address to) public;
+    
+    function assignTo() external payable;
+    function revokeFrom() external payable;
+    function assign(address to) external;
+    function revoke(address to) external;
+    function isCurrentMember(address to) external view returns (bool);
+    function getAddressAtIndex(uint256 index) external view returns (address);
 }
