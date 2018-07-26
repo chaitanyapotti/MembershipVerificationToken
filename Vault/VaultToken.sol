@@ -27,7 +27,7 @@ contract VaultToken is IElectusProtocol, Ownable {
         return indexers[index];
     }
 
-    function assignMembership(address to) public payable {
+    function assignTo(address to) public payable {
         require(currentHolders[to] != 1, "The user is a current member");
         //Optional ToDo: Call API smart contract to verify ID
         currentHolders[to] = 1;
@@ -35,10 +35,26 @@ contract VaultToken is IElectusProtocol, Ownable {
         topIndex++;
         emit Assigned(to);
     }
+    
+     function assign(address to) public onlyOwner {
+        require(currentHolders[to] != 1, "The user is a current member");
+        currentHolders[to] = 1;
+        indexers[topIndex] = to;
+        topIndex++;
+        emit Assigned(to);
+    }
 
-    function revokeMembership(address to) public {
+    function revoke(address to) public {
         require(currentHolders[to] == 1, "The user is not a current member");
         require(to == msg.sender || msg.sender == owner, "Not enough rights");
+        currentHolders[to] = 0;
+        emit Revoked(to);
+    }
+    
+    function revokeFrom(address to) public payable {
+        require(currentHolders[to] == 1, "The user is not a current member");
+        require(to == msg.sender || msg.sender == owner, "Not enough rights");
+        //TODO: Call API to verify
         currentHolders[to] = 0;
         emit Revoked(to);
     }
