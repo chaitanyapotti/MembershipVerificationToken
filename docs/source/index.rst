@@ -1,7 +1,7 @@
 Electus Protocol
 ===========================================
 
-.. image:: logo.svg
+.. image:: Electus.svg
     :width: 120px
     :alt: Electus logo
     :align: center
@@ -33,7 +33,7 @@ Useful links
 
 * `Ethereum Stackexchange <https://ethereum.stackexchange.com/>`_
 
-* `Gitter Chat <https://gitter.im/ethereum/electusprotocol/>`_
+* `Gitter Chat <https://gitter.im/electusnetwork/electusprotocol/>`_
 
 
 .. note::
@@ -48,9 +48,9 @@ Useful links
     software development. This includes code review, testing, audits and correctness proofs.
     Also note that users are sometimes more confident in code than its authors.
     Finally, blockchains have their own things to watch out for, so please take
-    a look at the section :ref:`security_considerations`.
+    a look at the section :ref:`Security_considerations`.
 
-    
+
 Contents
 ========
 
@@ -59,11 +59,10 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   Protocol.rst
-   Polls.rst
-   Actions.rst
-   Products.rst
-   Security-considerations.rst
-   Nomenclature.rst
-   Contributing.rst
-   Faq.rst
+   protocol.rst
+   polls.rst
+   actions.rst
+   products.rst
+   security-considerations.rst
+   contributing.rst
+   faq.rst
