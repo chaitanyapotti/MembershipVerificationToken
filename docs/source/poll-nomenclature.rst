@@ -17,10 +17,8 @@ How are they related to an Entity?
 
 Polls aggregate voting information based on 2 things:
 
-- Whether or not the voter is a member of a specific entity or combination of entities, for example:
-must be a member of entity X and not a member of entity Y.
-- A vote weightage policy, for example: proportional to some token balance, or proportional to time
-locked tokens, or delegated democracy etc.
+- Whether or not the voter is a member of a specific entity or combination of entities. For example, must be a member of entity X and not a member of entity Y.
+- A vote weightage policy, for example: proportional to some token balance, or proportional to time locked tokens, or delegated democracy etc.
 
 Polls can also be divided into time bound or time unbound polls. Bound polls stop recording votes after a
 certain time while unbound polls continually record votes with no time bound.

@@ -18,7 +18,9 @@ How are they related to polls?
 Actions carry out certain pre decided tasks based on the outcome of consensus, or a combination
 of such outcomes. Hence, it is crucial for these contracts to be linked with the polls that are
 relevant to it.
+
 Some examples of poll driven actions are:
+
 - Tap increment on a daico contract
 - Re-electing the admin of an entity contract
 
