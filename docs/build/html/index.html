@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to ElectusProtocol’s documentation! &mdash; ElectusProtocol 0.0.1 documentation</title>
+  <title>Electus Protocol &mdash; ElectusProtocol 0.0.1 documentation</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="protocol" href="protocol.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,12 +77,11 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Welcome to ElectusProtocol’s documentation!</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polls.html">polls</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -125,7 +125,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Welcome to ElectusProtocol’s documentation!</li>
+      <li>Electus Protocol</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -144,18 +144,65 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-electusprotocol-s-documentation">
-<h1>Welcome to ElectusProtocol’s documentation!<a class="headerlink" href="#welcome-to-electusprotocol-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="electus-protocol">
+<h1>Electus Protocol<a class="headerlink" href="#electus-protocol" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/Electus.svg"><div align="center" class="align-center"><img alt="Electus logo" src="_images/Electus.svg" width="120px" /></div>
+</a>
+<p>Electus Protocol is a standard interface for Membership Verification Token(MVT).</p>
+<p>The following standard allows for the implementation of a standard API for Membership Verification Token within smart contracts(called entities).
+This standard provides basic functionality to track membership of individuals in certain on-chain ‘organizations’.
+This allows for several use cases like automated compliance, and several forms of governance and membership structures.</p>
+<p>We considered use cases of MVTs being assigned to individuals which are non-transferable and revocable by the owner. MVTs can represent proof of recognition, proof of membership, proof of right-to-vote and several such otherwise abstract concepts on the blockchain. The following are some examples of those use cases, and it is possible to come up with several others:</p>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li>Voting: Voting is inherently supposed to be a permissioned activity. So far, onchain voting systems are only able to carry out voting with coin balance based polls. This can now change and take various shapes and forms.</li>
+<li>Passport issuance, social benefit distribution, Travel permit issuance, Drivers licence issuance are all applications which can be abstracted into membership, that is belonging of an individual to a small set, recognized by some authority as having certain entitlements, without needing any individual specific information(right to welfare, freedom of movement, authorization to operate vehicles, immigration)</li>
+<li>Investor permissioning: Making regulatory compliance a simple on chain process. Tokenization of securities, that are streamlined to flow only to accredited addresses, tracing and certifying on chain addresses for AML purposes.</li>
+<li>Software licencing: Software companies like game developers can use the protocol to authorize certain hardware units(consoles) to download and use specific software(games)</li>
 </ul>
+<p>In general, an individual can have different memberships in his day to day life. The protocol allows for the creation of software that puts everything all at one place.
+His identity can be verified instantly. Imagine a world where you don’t need to carry a wallet full of identity cards (Passport, gym membership, SSN, Company ID etc) and organizations can easily keep track of all its members.
+Organizations can easily identify and disallow fake identities.</p>
+<div class="section" id="useful-links">
+<h2>Useful links<a class="headerlink" href="#useful-links" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://electus.network">Electus Network</a></li>
+<li><a class="reference external" href="https://github.com/chaitanyapotti/ElectusProtocol/">Source Code</a></li>
+<li><a class="reference external" href="https://ethereum.stackexchange.com/">Ethereum Stackexchange</a></li>
+<li><a class="reference external" href="https://gitter.im/electusnetwork/electusprotocol/">Gitter Chat</a></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The best implementation of Electus Protocol right now is
+<a class="reference external" href="https://electus.network/">Electus Network</a>.
+Electus Network is a sample implementation but not the most
+exhaustive version.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Since software is written by humans, it can have bugs. Thus, also
+smart contracts should be created following well-known best-practices in
+software development. This includes code review, testing, audits and correctness proofs.
+Also note that users are sometimes more confident in code than its authors.
+Finally, blockchains have their own things to watch out for, so please take
+a look at the section <span class="xref std std-ref">Security_considerations</span>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="contents">
+<h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="genindex.html"><span class="std std-ref">Keyword Index</span></a>, <a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="protocol-nomenclature.html">Protocol Nomenclature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="polls.html">polls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="protocol-nomenclature.html">Protocol Nomenclature</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 
 
@@ -163,6 +210,13 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="protocol.html" class="btn btn-neutral float-right" title="protocol" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
   
 
   <hr/>

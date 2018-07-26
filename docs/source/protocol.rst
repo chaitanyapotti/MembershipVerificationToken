@@ -1,5 +1,5 @@
 ###############################
-protocol
+Protocol
 ###############################
 
 This section should provide you with all you need to know about Electus Protocol.
@@ -11,3 +11,4 @@ If something is missing here, please contact us on
    :maxdepth: 2
 
    protocol-nomenclature.rst
+   EIP.rst

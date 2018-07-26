@@ -1,5 +1,5 @@
 ###############################
-Polls
+Actions
 ###############################
 
 This section should provide you with all you need to know about Electus Protocol.
@@ -10,4 +10,4 @@ If something is missing here, please contact us on
 .. toctree::
    :maxdepth: 2
 
-   protocol-nomenclature.rst
+   action-nomenclature.rst

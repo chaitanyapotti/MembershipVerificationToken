@@ -1,5 +1,5 @@
 ###############################
-Polls
+polls
 ###############################
 
 This section should provide you with all you need to know about Electus Protocol.
