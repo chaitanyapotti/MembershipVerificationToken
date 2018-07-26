@@ -24,23 +24,34 @@ In general, an individual can have different memberships in his day to day life.
 His identity can be verified instantly. Imagine a world where you don't need to carry a wallet full of identity cards (Passport, gym membership, SSN, Company ID etc) and organizations can easily keep track of all its members. 
 Organizations can easily identify and disallow fake identities.
 
+Useful links
+------------
+
+* `Electus Network <https://electus.network>`_
+
+* `Source Code <https://github.com/chaitanyapotti/ElectusProtocol/>`_
+
+* `Ethereum Stackexchange <https://ethereum.stackexchange.com/>`_
+
+* `Gitter Chat <https://gitter.im/ethereum/electusprotocol/>`_
+
+
 .. note::
     The best implementation of Electus Protocol right now is
     `Electus Network <https://electus.network/>`_
     Electus Network is a sample implementation but not the most
-    complete.
+    exhaustive version.
     
-
+:ref:`Keyword Index <genindex>`, :ref:`Search Page <search>`
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   Protocol.rst
+   Polls.rst
+   Actions.rst
+   Products.rst
+   Nomenclature.rst
+   contributing.rst
+   faq.rst
