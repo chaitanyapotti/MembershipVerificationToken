@@ -11,27 +11,35 @@ requires:
 
 ## Simple Summary
 
-A standard interface for Identity Verification Management Token(IVM).
+A standard interface for Membership Verification Token(MVT).
 
 ## Abstract
 
-The following standard allows for the implementation of a standard API for Identity Verification Management Token within smart contracts. This standard provides basic functionality to track identities.
+The following standard allows for the implementation of a standard API for Membership Verification Token within smart contracts(called entities). This standard provides basic functionality to track membership of individuals in certain on-chain ‘organizations’. This allows for several use cases like automated compliance, and several forms of governance and membership structures.
 
-We considered use cases of IVM tokens being assigned to individuals which are non-transferable and revokable by the owner. IVM tokens can represent proof of identity. We considered a diverse universe of usecases, and we know you will dream up many more:
+We considered use cases of MVTs being assigned to individuals which are non-transferable and revocable by the owner. MVTs can represent proof of recognition, proof of membership, proof of right-to-vote and several such otherwise abstract concepts on the blockchain. The following are some examples of those use cases, and it is possible to come up with several others:
 
-- Voting - only members with tokens can vote
-- Passport issuance, social benefit distribution, Unique Identity
-- Shareholder, organizational member
-- Login
+-Voting: Voting is inherently supposed to be a permissioned activity. So far, onchain voting systems are only able to carry out voting with coin balance based polls. This can now change and take various shapes and forms.
+-Passport issuance, social benefit distribution, Travel permit issuance, Drivers licence issuance are all applications which can be abstracted into membership, that is belonging of an individual to a small set, recognized by some authority as having certain entitlements, without needing any individual specific information(right to welfare, freedom of movement, authorization to operate vehicles, immigration)
+-Investor permissioning: Making regulatory compliance a simple on chain process. Tokenization of securities, that are streamlined to flow only to accredited addresses, tracing and certifying on chain addresses for AML purposes.
+-Software licencing: Software companies like game developers can use the protocol to authorize certain hardware units(consoles) to download and use specific software(games)
 
-In general, an individual can have different memberships in his day to day life. The protocol puts them all at one place. His identity can be verified instantly. Imagine a world where you don't need to carry a wallet full of identity cards (Passport, gym membership, SSN, Company ID etc) and organizations can easily keep track of all its members. Organizations can easily identify and disallow fake identities.
+
+In general, an individual can have different memberships in his day to day life. The protocol allows for the creation of software that puts everything all at one place. His identity can be verified instantly. Imagine a world where you don't need to carry a wallet full of identity cards (Passport, gym membership, SSN, Company ID etc) and organizations can easily keep track of all its members. Organizations can easily identify and disallow fake identities.
 
 ## Motivation
 
-A standard interface allows any user,applications to work with any IVM on Ethereum. We provide for simple ERC-1300 smart contracts. Additional applications are discussed below.
+A standard interface allows any user,applications to work with any MVT on Ethereum. We provide for simple ERC-1300 smart contracts. Additional applications are discussed below.
 
-This standard is inspired from the fact that ERC 20 tradable tokens must be kept separate from voting right tokens. Elaborating, 
-///TODO:
+This standard is inspired from the fact that voting on the blockchain is done with token balance weights. This has been greatly detrimental to the formation of flexible governance systems on the blockchain, despite the tremendous governance potential that blockchains offer. The idea was to create a permissioning system that allows organizations to vet people once into the organization on the blockchain, and then gain immense flexibility in the kind of governance that can be carried out.
+
+**Trade-off between trustlessness and usability:**
+To truly understand the value of the protocol, it is important to understand the trade-off we are treading on. The MVT contract allows the creator to revoke the token, and essentially confiscate the membership of the member in question. To some, this might seem like an unacceptable flaw, however this is a design choice, and not a flaw. 
+The choice may seem to place a great amount of trust in the individuals who are managing the entity contract(entity owners). If the interests of the entity owner conflict with the interests of the members, the owner may resort to addition of fake addresses(to dominate consensus) or evicting members(to censor unfavourable decisions). At first glance this appears to be a major shortcomings, because the blockchain space is used to absolute removal of authority in most cases. Even the official definition of a dapp requires the absence of any party that manages the services provided by the application. However, the trust in entity owners is not misplaced, if it can be ensured that the interests of entity owners are aligned with the interests of members. 
+Another criticism of such a system would be that the standard edge of blockchain intermediation - “you cannot bribe the system if you don’t know who to bribe” - no longer holds. It is possible to bribe an entity owner into submission, and get them to censor or fake votes. There are several ways to respond to this argument. First of all, all activities, such as addition of members, and removal of members can be tracked on the blockchain and traces of such activity cannot be removed. It is not difficult to build analytics tools to detect malicious activity(adding 100 fake members suddenly who vote in the direction/sudden removal of a number of members voting in a certain direction). Secondly, the entity owners’ power is limited to the addition and removal of members. This means that they cannot tamper any votes. They can only alter the counting system to include fake voters or remove real voters. Any sensible auditor can identify the malicious/victim addresses and create an open source audit tool to find out the correct results. The biggest loser in this attack will be the entity owner, who has a reputation to lose. 
+Finally, one must understand why we are taking a step away from trustlessness in this trade-off. The answer is usability. Introducing a permissioning system expands the scope of products and services that can be delivered through the blockchain, while leveraging other aspects of the blockchain(cheap, immutable, no red-tape, secure). Consider the example of the driver licence issuing agency using the ERC-1300 standard. This is a service that simply cannot be deployed in a completely trustless environment. The introduction of permissioned systems expanded the scope of services on the blockchain to cover this particular service. Sure, they have the power to revoke a person’s licence for no reason. But will they? Who stands to lose the most, if the agency acts erratically? The agency itself. Now consider the alternative, the way licences(not necessarily only drivers licence, but say shareholder certificates and so on) are issued, the amount of time consumed, the complete lack of transparency. One could argue that if the legacy systems providing these services really wanted to carry out corruption and nepotism in the execution of these services, the present systems make it much easier to do so. Also, they are not transparent, meaning that there is no way to even detect if they act maliciously. 
+All that being said, we are very excited to share our proposal with the community and open up to suggestions in this space. 
+
 
 ## Specification
 
@@ -42,7 +50,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ```solidity
 pragma solidity ^0.4.24;
 
-/// @title ERC-1300 IVM Token Standard
+/// @title ERC-1300 MVT Standard
 /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1300.md
 interface ERC1300 {
     /// @dev This emits when a token is assigned to a member.
@@ -51,19 +59,19 @@ interface ERC1300 {
     /// @dev This emits when a membership is revoked
     event Revoked(address _to);
 
-    /// @dev IVM tokens assigned to the zero address are considered invalid, and this
+    /// @dev MVT's assigned to the zero address are considered invalid, and this
     ///  function throws for queries about the zero address.
     /// @param _owner An address for whom to query the membership
     /// @return whether the member owns the token
     function isCurrentMember(address _to) external view returns (bool);
 
-    /// @notice Find the member of an IVM
+    /// @notice Find the member of an MVT
     /// @dev index starts from zero. Useful to query all addresses (past or present)
     /// @param _tokenId The index
     /// @return The address of the owner of the IVM contract
     function getAddressAtIndex(uint256 _index) external view returns (address);
 
-    /// @notice Assigns membership of an IVM token from owner address to another address
+    /// @notice Assigns membership of an MVT from owner address to another address
     /// @dev Throws if the member already has the token.
     ///  Throws if `_to` is the zero address.
     ///  Throws if the `msg.sender` is not an owner.
@@ -85,7 +93,7 @@ interface ERC1300 {
     ///  Throws if the `msg.sender` is not an owner.
     ///  Throws if `_from` is the zero address.
     ///  When transaction is complete, this function emits the Revoked event.
-    /// @param _from The current owner of the NFT
+    /// @param _from The current owner of the MVT
     function revoke(address _from) external;
 
     /// @notice Revokes membership from any address
@@ -103,10 +111,10 @@ The **metadata extension** is OPTIONAL for ERC-1300 smart contracts (see "caveat
 /// @title ERC-1300 IVM Token Standard, optional metadata extension
 /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1300.md
 interface ERC1300Metadata /* is ERC1300 */ {
-    /// @notice A descriptive name for a collection of IVM tokens in this contract
+    /// @notice A descriptive name for a collection of MVTs in this contract
     function name() external view returns (string _name);
 
-    /// @notice An abbreviated name for IVM tokens in this contract
+    /// @notice An abbreviated name for MVTs in this contract
     function symbol() external view returns (string _symbol);
 }
 ```
@@ -120,11 +128,11 @@ This is the "ERC1300 Metadata JSON Schema" referenced above.
     "properties": {
         "name": {
             "type": "string",
-            "description": "Identifies the organization to which this IVM represents",
+            "description": "Identifies the organization to which this MVT represents",
         },
         "description": {
             "type": "string",
-            "description": "Describes the organization to which this IVM represents",
+            "description": "Describes the organization to which this MVT represents",
         }
     }
 }
@@ -143,16 +151,15 @@ The 0.4.24 Solidity interface grammar is not expressive enough to document the E
 
 ## Rationale
 
-There are many proposed uses of Ethereum smart contracts that depend on tracking identity. Examples of existing or planned IVM systems are Electus Token in ElectusNetwork. Future uses include tracking real-world identities, like passports, SSN and other memberships
+There are many potential uses of Ethereum smart contracts that depend on tracking membership. Examples of existing or planned MVT systems are Vault, a DAICO platform, and Stream, a security token framework. Future uses include the implementation of direct democracy, in-game memberships and badges, licence and travel document issuance, electronic voting machine trails, software licencing and many more.
 
-**"IVM" Word Choice**
-///TODO
+**MVT Word Choice:**
 
-///TODO *Alternatives considered: ticket*
+Since the tokens are non transferable and revocable, they function like membership cards. Hence the word membership verification token.
 
 **Transfer Mechanism**
 
-IVM Token can't be transferred.
+MVTs can't be transferred. This is a design choice, and one of the features that distinguishes this protocol.
 
 **Assign and Revoke mechanism**
 
@@ -165,11 +172,12 @@ The assign and revoke functions' documentation only specify conditions when the 
 
 **Gas and Complexity** (regarding the enumeration extension)
 
-This specification contemplates implementations that manage a few and *arbitrarily large* numbers of IVM tokens. If your application is able to grow then avoid using for/while loops in your code. These indicate your contract may be unable to scale and gas costs will rise over time without bound
+This specification contemplates implementations that manage a few and *arbitrarily large* numbers of MVTs. If your application is able to grow then avoid using for/while loops in your code. These indicate your contract may be unable to scale and gas costs will rise over time without bound
 
 **Privacy**
 
-//TODO
+Personal information: The protocol does not put any personal information on to the blockchain, so there is no compromise of privacy in that respect.
+Membership privacy: The protocol by design, makes it public which addresses are/aren’t members. Without making that information public, it would not be possible to independently audit governance activity or track admin(entity owner) activity.
 
 **Metadata Choices** (metadata extension)
 
@@ -177,7 +185,7 @@ We have required `name` and `symbol` functions in the metadata extension. Every 
 
 We remind implementation authors that the empty string is a valid response to `name` and `symbol` if you protest to the usage of this mechanism. We also remind everyone that any smart contract can use the same name and symbol as *your* contract. How a client may determine which ERC-1300 smart contracts are well-known (canonical) is outside the scope of this standard.
 
-A mechanism is provided to associate IVM tokens with URIs. We expect that many implementations will take advantage of this to provide metadata for each IVM system. The URI MAY be mutable (i.e. it changes from time to time). We considered an IVM token representing membership of a place, in this case metadata about the organization can naturally change.
+A mechanism is provided to associate MVTs with URIs. We expect that many implementations will take advantage of this to provide metadata for each MVT system. The URI MAY be mutable (i.e. it changes from time to time). We considered an MVT representing membership of a place, in this case metadata about the organization can naturally change.
 
 Metadata is returned as a string value. Currently this is only usable as calling from `web3`, not from other contracts. This is acceptable because we have not considered a use case where an on-blockchain application would query such information.
 
@@ -191,9 +199,9 @@ We have been very inclusive in this process and invite anyone with questions or 
 
 We have adopted `name` and `symbol` semantics from the ERC-20 specification.
 
-Example IVM implementations as of July 2018:
+Example MVT implementations as of July 2018:
 
-- Electus Protocol(Github Link to be added when public //TODO)
+- Electus Protocol(https://github.com/chaitanyapotti/ElectusProtocol/blob/master/Vault/VaultToken.sol)
 
 ## Test Cases
 
@@ -226,12 +234,11 @@ Electus Protocol ERC1300 -- a reference implementation
 
 **Discussions**
 
-//TODO
 1. Reddit (announcement of first live discussion). https://www.reddit.com/r/ethereum/comments/7r2ena/friday_119_live_discussion_on_erc_nonfungible/
 1. Gitter #EIPs (announcement of first live discussion). https://gitter.im/ethereum/EIPs?at=5a5f823fb48e8c3566f0a5e7
 1. ERC-1300 (announcement of first live discussion). https://github.com/ethereum/eips/issues/1300#issuecomment-358369377
 
-**NFT Implementations and Other Projects**
+**MVT Implementations and Other Projects**
 
 1. Electus Protocol ERC-1300 Token. https://github.com/chaitanyapotti/ElectusProtocol
 
