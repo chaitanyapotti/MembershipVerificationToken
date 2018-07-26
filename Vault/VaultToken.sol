@@ -36,7 +36,7 @@ contract VaultToken is IElectusProtocol, Ownable {
         emit Assigned(to);
     }
     
-     function assign(address to) public onlyOwner {
+    function assign(address to) public onlyOwner {
         require(currentHolders[to] != 1, "The user is a current member");
         currentHolders[to] = 1;
         indexers[topIndex] = to;
