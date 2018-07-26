@@ -10,4 +10,4 @@ If something is missing here, please contact us on
 .. toctree::
    :maxdepth: 2
 
-   protocol-nomenclature.rst
+   poll-nomenclature.rst
