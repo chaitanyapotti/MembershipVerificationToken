@@ -54,7 +54,7 @@ contract VaultToken is IElectusProtocol, Ownable {
     function revokeFrom(address to) public payable {
         require(currentHolders[to] == 1, "The user is not a current member");
         require(to == msg.sender || msg.sender == owner, "Not enough rights");
-        //TODO: Call API to verify
+        //TODO: Optional Call API to verify
         currentHolders[to] = 0;
         emit Revoked(to);
     }
