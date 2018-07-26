@@ -16,6 +16,7 @@ How are they related to an Entity?
 ---------------------------------
 
 Polls aggregate voting information based on 2 things::
+
 > Whether or not the voter is a member of a specific entity or combination of entities, for example:
 must be a member of entity X and not a member of entity Y.
 > A vote weightage policy, for example: proportional to some token balance, or proportional to time
