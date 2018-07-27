@@ -1,5 +1,5 @@
 ********************************
-Entity Implementation
+Poll Implementation
 ********************************
 
 All the polls implement an abstract contract "BasePoll.sol". It defines the structure of a poll contract.
