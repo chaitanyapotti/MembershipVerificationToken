@@ -12,9 +12,23 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+
+import sys
+import os
+import re
+
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+
+def setup(sphinx):
+    thisdir = os.path.dirname(os.path.realpath(__file__))
+    sys.path.insert(0, thisdir + '/utils')
+    from pygments_lexer_solidity import SolidityLexer
+    sphinx.add_lexer('Solidity', SolidityLexer())
+
+    sphinx.add_stylesheet('css/custom.css')
+
 
 
 # -- Project information -----------------------------------------------------
@@ -24,9 +38,14 @@ copyright = u'2018, Chaitanya Potti'
 author = u'Chaitanya Potti'
 
 # The short X.Y version
-version = u''
-# The full version, including alpha/beta/rc tags
-release = u'0.0.1'
+with open('../CMakeLists.txt', 'r') as f:
+    version = re.search('PROJECT_VERSION "([^"]+)"', f.read()).group(1)
+# The full version, including alpha/beta/rc tags.
+if os.path.isfile('../prerelease.txt') != True or os.path.getsize('../prerelease.txt') == 0:
+    release = version
+else:
+    # This is a prerelease version
+    release = version + '-develop'
 
 
 # -- General configuration ---------------------------------------------------
@@ -69,6 +88,7 @@ exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
+highlight_language = 'Solidity'
 
 
 # -- Options for HTML output -------------------------------------------------
