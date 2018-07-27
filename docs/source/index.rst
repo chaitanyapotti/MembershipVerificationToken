@@ -2,7 +2,7 @@ Electus Protocol
 ===========================================
 
 .. image:: Electus.svg
-    :width: 120px
+    :width: 250px
     :alt: Electus logo
     :align: center
 
