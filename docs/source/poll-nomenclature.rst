@@ -30,8 +30,9 @@ Kinds of polls
 There is no limit to the kind of vote weightage policy, so several kinds of polls can be made. Some examples which
 illustrate this fact: 
 
-    1. One person - One Vote
-    2. Token weight with freeze
-    3. Delegated voting
-    4. Karma voting;
-    5. Token weight times Stake Duration
+    #. One person - One Vote
+    #. Token weight Uncapped with freeze
+    #. Token weight Capped with freeze
+    #. Delegated voting
+    #. Karma voting
+    #. Token weight times Stake Duration

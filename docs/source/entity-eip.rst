@@ -2,8 +2,8 @@
 Entity Implementation
 ********************************
 
-Interface:
-==========
+Interface
+=========
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
 
@@ -87,24 +87,24 @@ This is the "ERC1300 Metadata JSON Schema" referenced above.
 
 .. code-block:: json
 
-{
-    "title": "Organization Metadata",
-    "type": "object",
-    "properties": {
-        "name": {
-            "type": "string",
-            "description": "Identifies the organization to which this MVT represents",
-        },
-        "description": {
-            "type": "string",
-            "description": "Describes the organization to which this MVT represents",
+    {
+        "title": "Organization Metadata",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "description": "Identifies the organization to which this MVT represents",
+            },
+            "description": {
+                "type": "string",
+                "description": "Describes the organization to which this MVT represents",
+            }
         }
     }
-}
 
 
-Sample Implementation:
-======================
+Sample Implementation
+=====================
 
 The complete implementation is available at the `github repo <https://github.com/chaitanyapotti/ElectusProtocol/>`_
 
