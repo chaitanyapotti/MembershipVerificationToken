@@ -21,11 +21,12 @@ Polls are broadly divided into two types:
 :Bound: 
     Time limited. 
     
-    Actionable polls. (calls OnPollFinish() at the end of poll). :ref:`action-nomenclature`.
+    Automated actions can be defined at the end of poll. :ref:`action-nomenclature`.
 
-    Bound polls can't be deployed independently (Unless we remove OnPollFinish() asbtraction). Need action contract to manage poll.
+    Not necessarily independent. Contracts with automated action require the existence of 
+    automated contracts.
 
-    Abstract implementation.
+    May be Abstract implementation. (if onPollFinish() is implemented it is non abstract).
 
 UnBound Poll Base
 =================
