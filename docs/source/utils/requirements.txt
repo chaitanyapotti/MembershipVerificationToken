@@ -1,1 +1,2 @@
-pygments_lexer_solidity
+pygments-lexer-solidity>=0.3.1
+sphinx_rtd_theme>=0.3.1
