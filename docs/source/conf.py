@@ -38,15 +38,19 @@ copyright = u'2018, Chaitanya Potti'
 author = u'Chaitanya Potti'
 
 # The short X.Y version
-with open('../CMakeLists.txt', 'r') as f:
-    version = re.search('PROJECT_VERSION "([^"]+)"', f.read()).group(1)
-# The full version, including alpha/beta/rc tags.
-if os.path.isfile('../prerelease.txt') != True or os.path.getsize('../prerelease.txt') == 0:
-    release = version
-else:
-    # This is a prerelease version
-    release = version + '-develop'
+# with open('../CMakeLists.txt', 'r') as f:
+#     version = re.search('PROJECT_VERSION "([^"]+)"', f.read()).group(1)
+# # The full version, including alpha/beta/rc tags.
+# if os.path.isfile('../prerelease.txt') != True or os.path.getsize('../prerelease.txt') == 0:
+#     release = version
+# else:
+#     # This is a prerelease version
+#     release = version + '-develop'
 
+# The short X.Y version
+version = u''
+# The full version, including alpha/beta/rc tags
+release = u'0.0.1'
 
 # -- General configuration ---------------------------------------------------
 
