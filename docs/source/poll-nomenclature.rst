@@ -7,7 +7,7 @@ Let us talk about Nomenclature first
 .. _poll:
 
 Poll
-====
+----
 
 A poll is a smart contract designed to track votes of people belonging to a certain entity, or combination of
 entities. The poll contains information about what the governance unit wishes for in a certain matter.

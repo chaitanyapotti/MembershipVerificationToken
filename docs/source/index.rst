@@ -59,7 +59,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   protocol.rst
+   entity.rst
    polls.rst
    actions.rst
    products.rst

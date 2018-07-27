@@ -7,7 +7,7 @@ Let us talk about Nomenclature first
 .. _action:
 
 Action
-======
+------
 
 An action is a smart contract which can be triggered to take certain action or execute a strategy based on
 the result of a poll. They are triggered by transactions and carry out the instructions in a 'code is law’ fashion.

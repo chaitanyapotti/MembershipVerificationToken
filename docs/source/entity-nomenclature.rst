@@ -1,5 +1,5 @@
 ********************************
-Protocol Nomenclature
+Entity Nomenclature
 ********************************
 
 Let us talk about Nomenclature first
@@ -7,7 +7,7 @@ Let us talk about Nomenclature first
 .. _entity:
 
 Entity
-======
+------
 
 The entity is a smart contract designed to track membership. It is operated by the contract owner, called the
 admin. The entity contains information about which ethereum addresses are part of the governance unit.
