@@ -52,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Electus Protool'
+project = 'Electus Protocol'
 copyright = '2018, Electus Network'
 
 # The version info for the project you're documenting, acts as replacement for
