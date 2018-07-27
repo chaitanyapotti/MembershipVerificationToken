@@ -21,13 +21,13 @@ import re
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
-def setup(sphinx):
+def setup(app):
     thisdir = os.path.dirname(os.path.realpath(__file__))
     sys.path.insert(0, thisdir + '/utils')
     from pygments_lexer_solidity import SolidityLexer
-    sphinx.add_lexer('Solidity', SolidityLexer())
+    app.add_lexer('Solidity', SolidityLexer())
 
-    sphinx.add_stylesheet('css/custom.css')
+    app.add_stylesheet('docs-css/custom.css')
 
 
 
