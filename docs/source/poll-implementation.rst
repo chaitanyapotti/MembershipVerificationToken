@@ -5,7 +5,7 @@ Poll Implementation
 All the polls implement an abstract contract "BasePoll.sol". It defines the structure of a poll contract.
 Please observe the inheritance relationship carefully.
 
-Members vote for a proposal amongst a list. They can also revoke a proposal.
+Members vote for a proposal amongst a list. They can also revoke an already cast vote.
 
 Polls are broadly divided into two types:
 
@@ -23,7 +23,7 @@ Polls are broadly divided into two types:
     
     Actionable polls. (calls OnPollFinish() at the end of poll). :ref:`action-nomenclature`.
 
-    Bound polls can't be deployed independently. Need action contract to manage poll.
+    Bound polls can't be deployed independently (Unless we remove OnPollFinish() asbtraction). Need action contract to manage poll.
 
     Abstract implementation.
 

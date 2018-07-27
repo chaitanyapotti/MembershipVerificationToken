@@ -6,6 +6,8 @@ Electus Protocol
     :alt: Electus logo
     :align: center
 
+
+
 Electus Protocol is a standard interface for Membership Verification Token(MVT).
 
 The following standard allows for the implementation of a standard API for Membership Verification Token within smart contracts(called entities). 
