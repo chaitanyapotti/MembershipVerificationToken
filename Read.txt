@@ -1,3 +1,15 @@
-Hello World.
+Checklist:
 
-This file is just to fuck with pull 
+Windows:
+1. VS Code
+2. npm, Node
+3. Visual Studio(not mandatory)
+4. Git for Windows
+5. Windows Subsystem for Linux (For bash)
+
+Subsystem for Linux:
+1. npm, node
+2. cpp
+3. pip
+4. sphinx
+5. Git
