@@ -7,16 +7,16 @@ Interface
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
 
-**Every ERC-1300 compliant contract must implement the ERC1300 interface:
+**Every ERC-1261 compliant contract must implement the ERC1261 interface:
 
 ::
 
 
     pragma solidity ^0.4.24;
 
-    /// @title ERC-1300 MVT Standard
-    /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1300.md
-    interface ERC1300 {
+    /// @title ERC-1261 MVT Standard
+    /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
+    interface ERC1261 {
         /// @dev This emits when a token is assigned to a member.
         event Assigned(address _to);
 
@@ -68,13 +68,13 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
     }
 
 
-The metadata extension is OPTIONAL for ERC-1300 smart contracts (see "caveats", below). This allows your smart contract to be interrogated for its name and for details about the organization which your IVM tokens represent.
+The metadata extension is OPTIONAL for ERC-1261 smart contracts (see "caveats", below). This allows your smart contract to be interrogated for its name and for details about the organization which your IVM tokens represent.
 
 ::
 
-    /// @title ERC-1300 IVM Token Standard, optional metadata extension
-    /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1300.md
-    interface ERC1300Metadata /* is ERC1300 */ {
+    /// @title ERC-1261 IVM Token Standard, optional metadata extension
+    /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
+    interface ERC1261Metadata /* is ERC1261 */ {
         /// @notice A descriptive name for a collection of MVTs in this contract
         function name() external view returns (string _name);
 
@@ -83,7 +83,7 @@ The metadata extension is OPTIONAL for ERC-1300 smart contracts (see "caveats", 
     }
 
 
-This is the "ERC1300 Metadata JSON Schema" referenced above.
+This is the "ERC1261 Metadata JSON Schema" referenced above.
 
 .. code-block:: json
 
