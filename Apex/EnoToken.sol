@@ -10,6 +10,8 @@ contract EnoToken is IElectusProtocol, Ownable {
 
     mapping (uint256 => address) public indexers;
 
+    mapping (address => uint256) public members;
+
     uint256 public topIndex = 0;
 
     modifier isCurrentHolder {
@@ -19,6 +21,10 @@ contract EnoToken is IElectusProtocol, Ownable {
 
     function isCurrentMember(address to) public view returns (bool) { 
         return currentHolders[to] == 1;
+    }
+
+    function wasMember(address to) public view returns (bool) {
+        return members[to] == 1;
     }
 
     function getAddressAtIndex(uint256 index) public view returns (address) {
