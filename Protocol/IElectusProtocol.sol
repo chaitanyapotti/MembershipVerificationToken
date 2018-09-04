@@ -1,6 +1,10 @@
 pragma solidity ^0.4.24;
 
 
+//TODO: Add Staking for Electus Protocol - expire staking
+//TODO: Add erc721 attributes
+//TODO: Request transfer of badge - with event
+
 //All other contracts must use a 1300 token which implements this protocol - only reference
 interface IElectusProtocol {
     event Assigned(address to);

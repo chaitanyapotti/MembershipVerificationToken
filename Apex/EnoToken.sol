@@ -39,4 +39,5 @@ contract EnoToken is IElectusProtocol, Ownable {
         currentHolders[to] = 0;
         emit Revoked(to);
     }
+    
 }
