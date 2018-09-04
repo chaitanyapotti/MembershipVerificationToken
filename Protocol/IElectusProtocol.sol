@@ -16,4 +16,5 @@ interface IElectusProtocol {
     function revoke(address to) external;
     function isCurrentMember(address to) external view returns (bool);
     function getAddressAtIndex(uint256 index) external view returns (address);
+    function transferRights(address to) external returns (bool);
 }

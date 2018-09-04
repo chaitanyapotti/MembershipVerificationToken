@@ -39,5 +39,14 @@ contract EnoToken is IElectusProtocol, Ownable {
         currentHolders[to] = 0;
         emit Revoked(to);
     }
+<<<<<<< HEAD
     
+=======
+
+    function transferRights(address to) public isCurrentHolder returns(bool) {
+        revokeMembership(msg.sender);
+        assignMembership(to);
+        return currentHolders[to] == 1;
+    }
+>>>>>>> c3db905359e430b207932aa3bad38bf2cb482ee9
 }
