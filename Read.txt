@@ -38,3 +38,29 @@ interface ERC1202 {
 We are currently developing multiple standard smart contracts which act as organizations with polling infrastructure.
 These smart contracts are blockchain agnostic and can be deployed on Multiple platforms such as Ethereum, WanChain and EOS.
 The reason we are using blockchain is to ensure immutability and transparency in governance.
+
+
+Event logging - listen
+https://ethereum.stackexchange.com/questions/8658/what-does-the-indexed-keyword-do
+
+
+Staking - 
+//TODO: Add Staking for Electus Protocol - expire staking - auto expire - can't do in protocol(erc1261) level - coz... it'll be all or none.
+//User may want to only stake a portion of his token balance and not everything.
+//allowance - erc20 refer chesi... we need to implement here
+
+//For all polls and erc1261, use erc165 implementation
+
+
+Why we can't use erc721 for membership tokens?
+
+1. we need revoke functionality
+2. Also, memberships are non-transferable
+
+
+
+TODO:
+1. Wallet support - for multiple organizational entities (An user wallet can track multiple membership tokens)
+2. OnTokenReceived() - must be implemented by wallets to enable the receipt of erc1261
+3. How to make sure contracts can vote in polls as contracts own ERC1261.? - Use TransferFrom.! - similar to it - a contract can prove it owns 1261
+-- Probably like 

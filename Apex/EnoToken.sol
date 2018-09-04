@@ -8,9 +8,7 @@ contract EnoToken is IElectusProtocol, Ownable {
 
     mapping (address => uint256) public currentHolders;
 
-    mapping (uint256 => address) public indexers;
-
-    uint256 public topIndex = 0;
+    address[] public indexers;
 
     modifier isCurrentHolder {
         require(isCurrentMember(msg.sender), "The user is not a current member");
@@ -21,15 +19,14 @@ contract EnoToken is IElectusProtocol, Ownable {
         return currentHolders[to] == 1;
     }
 
-    function getAddressAtIndex(uint256 index) public view returns (address) {
-        return indexers[index];
+    function getAllMembers() public view returns (address[]) {
+        return indexers;
     }
 
     function assignMembership(address to) public onlyOwner {
         require(currentHolders[to] != 1, "The user is a current member");
         currentHolders[to] = 1;
-        indexers[topIndex] = to;
-        topIndex++;
+        indexers.push(to);
         emit Assigned(to);
     }
 
@@ -39,14 +36,14 @@ contract EnoToken is IElectusProtocol, Ownable {
         currentHolders[to] = 0;
         emit Revoked(to);
     }
-<<<<<<< HEAD
-    
-=======
 
-    function transferRights(address to) public isCurrentHolder returns(bool) {
+    function transferRights(address to) public {
         revokeMembership(msg.sender);
         assignMembership(to);
-        return currentHolders[to] == 1;
     }
->>>>>>> c3db905359e430b207932aa3bad38bf2cb482ee9
+
+    function voteInPoll(address pollAddress, uint8 proposal) public onlyOwner {
+        BasePoll poll = BasePoll(pollAddress);
+        poll.vote(proposal);
+    }
 }
