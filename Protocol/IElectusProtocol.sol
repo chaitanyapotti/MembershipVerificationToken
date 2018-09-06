@@ -1,36 +1,44 @@
 pragma solidity ^0.4.24;
 
 
-//TODO: Request transfer of badge - with event
 //todo: add interoperability with other membership tokens
-// sign message and sent over http request. - assign membership
-//todo: add totalsupply()
-//todo: add metadata
 //All other contracts must use a 1300 token which implements this protocol - only reference
-interface IElectusProtocol {
+interface ERC1261 /* is ERC165 */ {
 
     event Assigned(address indexed to);
     event Revoked(address indexed to);
     
-    function canReceiveMembership(address to) external payable;
-
-    function assignTo() external payable;
-    function revokeFrom() external payable;
-    function assign(address to) external;
-    function revoke(address to) external;
     function isCurrentMember(address to) external view returns (bool);
     function getAllMembers() external view returns (address[]);
-    function transferRights(address to) external view returns(bool);
+    function totalMemberCount() external view returns (uint);
+    function requestMembership(bytes32[] data) external payable;
+    function revokeMembership() external payable;
+    function assignTo(address _to, bytes32[] data) external;
+    function revokeFrom(address _from) external;
 }
+
+interface ERC165 {
+    /// @notice Query if a contract implements an interface
+    /// @param interfaceID The interface identifier, as specified in ERC-165
+    /// @dev Interface identification is specified in ERC-165. This function
+    ///  uses less than 30,000 gas.
+    /// @return `true` if the contract implements `interfaceID` and
+    ///  `interfaceID` is not 0xffffffff, `false` otherwise
+    function supportsInterface(bytes4 interfaceID) external view returns (bool);
+}
+
+/// @title ERC-1261 Membership Verification Token Standard, optional metadata extension
+/// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
+///  Note: the ERC-1261 identifier for this interface is //TODO.
+interface ERC1261Metadata /* is ERC1261 */ {
+    /// @notice A descriptive name for a collection of MTs in this contract
+    function name() external view returns (string _name);
+
+    /// @notice An abbreviated name for MTs in this contract
+    function symbol() external view returns (string _symbol);
+}
+
 //TODO: add attributes
-//when sending array as input, use external functions.
-//TODO: Send in array as input for assign and revoke .. to do batch transactions.
-
-//TODO: Add erc721 attributes - ERC721TokenMetaData - implementation (e.g.: name, symbol)
-//TODO: ERC 1261 Wallet implementation
-//Refer here while implementing: https://github.com/0xcert/ethereum-erc721
-
-//erc1261 must use erc165.
 
 //request change of attribute. Approve change of attribute by admin
 //bytes[] 
