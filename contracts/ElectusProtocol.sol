@@ -31,7 +31,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         _;
     }
 
-     modifier isNotACurrentHolder {
+    modifier isNotACurrentHolder {
         require(!isCurrentMember(msg.sender), "Already a member");
         _;
     }
