@@ -2,8 +2,6 @@
 
 <!-- <img align="center" src="./img/colonyNetwork_color.svg" /> -->
 
-# The Colony Network
-
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/ElectusProtocol/Lobby)
 [![Build Status](https://ci.appveyor.com/api/projects/status/c4v10eoq85vpyptp/branch/master?svg=true)](https://ci.appveyor.com/project/chaitanyapotti/electusprotocol/branch/master)
 
