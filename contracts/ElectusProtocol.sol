@@ -22,8 +22,8 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     event Revoked(address indexed to);
 
     constructor () public {
-        supportedInterfaces[0x1325] = true; //IERC1261 --todo
-        supportedInterfaces[0x124] = true; //Ownable --todo
+        supportedInterfaces[0x912f7bb2] = true; //IERC1261
+        supportedInterfaces[0x83adfb2d] = true; //Ownable
     }
 
     modifier isCurrentHolder {

@@ -10,7 +10,7 @@ contract ERC1261MetaData is ElectusProtocol, IERC1261MetaData {
     string internal _orgSymbol;
     
     constructor() public {
-        supportedInterfaces[0x1234] = true;
+        supportedInterfaces[0x93254542] = true;
     }
 
     function name() external view returns (string) {
