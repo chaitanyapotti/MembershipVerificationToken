@@ -20,6 +20,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
 
     event Assigned(address indexed to);
     event Revoked(address indexed to);
+    event ModifiedData(address indexed to);
 
     constructor () public {
         supportedInterfaces[0x912f7bb2] = true; //IERC1261
@@ -37,6 +38,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     }
 
     function isCurrentMember(address _to) public view returns (bool){
+        require(_to != address(0));
         return currentHolders[_to].hasToken;
     }
 
@@ -49,11 +51,13 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     }
 
     function getData(address _to) external view returns (bytes32[]) {
+        require(_to != address(0));
         return currentHolders[_to].data;
     }
 
     function modifyData(address _to, bytes32[] newData) external onlyOwner {
         currentHolders[_to].data = newData;
+        emit ModifiedData(_to);
     }
 
     function requestMembership(bytes32[] data) external isNotACurrentHolder payable {
@@ -74,6 +78,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     }
 
     function _assign(address _to, bytes32[] data) private {
+        require(_to != address(0));
         MemberData memory member = MemberData({hasToken: true, data: data});
         currentHolders[_to] = member;
         allHolders.push(_to);
@@ -81,6 +86,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     }
 
     function _revoke(address _from) private {
+        require(_from != address(0));
         MemberData storage member = currentHolders[_from];
         member.hasToken = false;
         emit Revoked(_from);
