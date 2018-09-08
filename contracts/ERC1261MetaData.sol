@@ -4,7 +4,7 @@ import "./ElectusProtocol.sol";
 import "./Protocol/IElectusProtocol.sol";
 
 
-contract ERC1261MetaData is ElectusProtocol, IERC1261MetaData {
+contract ERC1261MetaData is ElectusProtocol, IERC1261Metadata {
 
     string internal _orgName;
     string internal _orgSymbol;
