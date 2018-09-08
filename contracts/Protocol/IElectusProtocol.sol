@@ -53,14 +53,14 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     /// @dev Throws if the `msg.sender` already has the token.
     ///  the individual `msg.sender` can request for a membership and if some exisiting criteria are satisfied,
     ///  the individual `msg.sender` receives the token.
-    ///  When transfer is complete, this function emits the Assigned event.
+    ///  When the token is assigned, this function emits the Assigned event.
     /// @param data the data associated with the member.
     function requestMembership(bytes32[] data) external payable;
 
     /// @notice Revokes membership from any address.
     /// @dev Throws if the `msg.sender` already doesn't have the token.
     ///  the individual `msg.sender` can revoke his/her membership.
-    ///  When transfer is complete, this function emits the Revoked event.
+    ///  When the token is revoked, this function emits the Revoked event.
     function revokeMembership() external payable;
 
     /// @notice Assigns membership of an MVT from owner address to another address
@@ -68,12 +68,12 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     ///  Throws if `_to` is the zero address.
     ///  Throws if the `msg.sender` is not an owner.
     ///  The entity assigns the membership to each individual.
-    ///  When transfer is complete, this function emits the Assigned event.
+    ///  When the token is assigned, this function emits the Assigned event.
     /// @param _to the address to which the token is assigned.
     /// @param data the data associated with the address.
     function assignTo(address _to, bytes32[] data) external;
 
-    /// @notice Revokes the membership.
+    /// @notice Only Owner can revoke the membership
     /// @dev This removes the membership of the user.
     ///  Throws if the `_from` is not an owner of the token.
     ///  Throws if the `msg.sender` is not an owner.
