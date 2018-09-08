@@ -26,8 +26,8 @@ interface IERC1261 /* is ERC173, ERC165 */ {
 ///  Note: the ERC-1261 identifier for this interface is //TODO.
 interface IERC1261Metadata /* is ERC1261 */ {
     /// @notice A descriptive name for a collection of MTs in this contract
-    function name() external view returns (string _name);
+    function name() external view returns (string);
 
     /// @notice An abbreviated name for MTs in this contract
-    function symbol() external view returns (string _symbol);
+    function symbol() external view returns (string);
 }
