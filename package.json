@@ -12,6 +12,10 @@
     "test": "npm run start:blockchain:client & truffle migrate --reset --compile-all && truffle test --network development",
     "post-test": "npm run stop:blockchain:client"
   },
+  "files": [
+    "contracts",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chaitanyapotti/ElectusProtocol.git"
