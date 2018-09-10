@@ -116,11 +116,13 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
         ///  `interfaceID` is not 0xffffffff, `false` otherwise
         function supportsInterface(bytes4 interfaceID) external view returns (bool);
     }
-```
+
+
 
 The metadata extension is OPTIONAL for ERC-1261 smart contracts (see "caveats", below). This allows your smart contract to be interrogated for its name and for details about the organization which your IVM tokens represent.
 
 ::
+
 
     /// @title ERC-1261 IVM Token Standard, optional metadata extension
     /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
@@ -135,7 +137,9 @@ The metadata extension is OPTIONAL for ERC-1261 smart contracts (see "caveats", 
 
 The **metadata extension** is OPTIONAL for ERC-1261 smart contracts (see "caveats", below). This allows your smart contract to be interrogated for its name and for details about the organization which your IVM tokens represent.
 
-```solidity
+::
+
+
     /// @title ERC-1261 MVT Standard, optional metadata extension
     /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
     interface ERC1261Metadata /* is ERC1261 */ {
@@ -145,25 +149,26 @@ The **metadata extension** is OPTIONAL for ERC-1261 smart contracts (see "caveat
         /// @notice An abbreviated name for MVTs in this contract
         function symbol() external view returns (string _symbol);
     }
-```
+
 
 This is the "ERC1261 Metadata JSON Schema" referenced above.
 
 ```json
-{
-  "title": "Organization Metadata",
-  "type": "object",
-  "properties": {
-    "name": {
-      "type": "string",
-      "description": "Identifies the organization to which this MVT represents"
-    },
-    "description": {
-      "type": "string",
-      "description": "Describes the organization to which this MVT represents"
+
+    {
+    "title": "Organization Metadata",
+    "type": "object",
+    "properties": {
+        "name": {
+        "type": "string",
+        "description": "Identifies the organization to which this MVT represents"
+        },
+        "description": {
+        "type": "string",
+        "description": "Describes the organization to which this MVT represents"
+        }
     }
-  }
-}
+    }
 ```
 
 ### Caveats
