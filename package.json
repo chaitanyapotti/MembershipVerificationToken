@@ -1,8 +1,8 @@
 {
   "name": "electusprotocol",
-  "version": "1.0.0",
-  "description": "",
-  "main": "truffle-config.js",
+  "version": "1.0.1",
+  "description": "Standard Implementation and interface for Electus Protocol",
+  "main": "truffle.js",
   "directories": {
     "test": "test"
   },
@@ -20,11 +20,19 @@
     "type": "git",
     "url": "git+https://github.com/chaitanyapotti/ElectusProtocol.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Chaitanya Potti",
   "bugs": {
     "url": "https://github.com/chaitanyapotti/ElectusProtocol/issues"
   },
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "smart",
+    "contracts",
+    "protocol",
+    "electus"
+  ],
+  "license": "MIT",
   "homepage": "https://github.com/chaitanyapotti/ElectusProtocol#readme",
   "dependencies": {
     "ganache-cli": "^6.1.8",
