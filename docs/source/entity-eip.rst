@@ -153,8 +153,7 @@ The **metadata extension** is OPTIONAL for ERC-1261 smart contracts (see "caveat
 
 This is the "ERC1261 Metadata JSON Schema" referenced above.
 
-```json
-
+.. code-block:: json
 
     {
     "title": "Organization Metadata",
@@ -170,7 +169,7 @@ This is the "ERC1261 Metadata JSON Schema" referenced above.
         }
     }
     }
-```
+
 
 ### Caveats
 
