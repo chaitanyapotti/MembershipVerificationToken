@@ -36,6 +36,6 @@
   "homepage": "https://github.com/chaitanyapotti/ElectusProtocol#readme",
   "dependencies": {
     "ganache-cli": "^6.1.8",
-    "zeppelin-solidity": "^1.12.0"
+    "openzeppelin-solidity": "^1.12.0"
   }
 }
