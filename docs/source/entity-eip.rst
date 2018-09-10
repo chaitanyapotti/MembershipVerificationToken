@@ -155,6 +155,7 @@ This is the "ERC1261 Metadata JSON Schema" referenced above.
 
 ```json
 
+
     {
     "title": "Organization Metadata",
     "type": "object",
