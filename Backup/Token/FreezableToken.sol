@@ -12,17 +12,17 @@ contract FreezableToken is ERC20Token, Authorizable, IFreezableToken {
     mapping (address => bool) public frozenAccounts;
     event FrozenFunds(address target, bool frozen);
 
-    function freezeAccount(address target) public onlyAuthorized {
+    function freezeAccount(address target) external onlyAuthorized {
         frozenAccounts[target] = true;
         emit FrozenFunds(target, true);
     }
 
-    function unFreezeAccount(address target) public onlyAuthorized {
+    function unFreezeAccount(address target) external onlyAuthorized {
         frozenAccounts[target] = false;
         emit FrozenFunds(target, false);
     }
 
-    function isFrozen(address _target) public view returns (bool) {
+    function isFrozen(address _target) external view returns (bool) {
         return frozenAccounts[_target];
     }
 
