@@ -54,10 +54,6 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         return allHolders;
     }
 
-    function totalMemberCount() external view returns (uint) {
-        return allHolders.length;
-    }
-
     function getAttributeNames() external view returns (bytes32[]) {
         return attributeNames;
     }
@@ -69,12 +65,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
 
     function getAttributeByName(address _to, bytes32 attribute) external view returns (bytes32) {
         uint index = getIndexOfAttribute(attribute);
-        return getAttributeByIndex(_to, index);
-    }
-
-    function getAttributeByIndex(address _to, uint _attributeIndex) public view returns (bytes32) {
-        require(attributeNames.length > _attributeIndex, "Required attribute doesn't exist");
-        return currentHolders[_to].data[_attributeIndex];
+        return currentHolders[_to].data[index];
     }
 
     function addAttributeSet(bytes32 _name, bytes32[] values) external {
@@ -82,21 +73,11 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         attributeValueCollection[_name] = values;
     }
 
-    function modifyAttributes(address _to, uint[] attributeIndexes) external onlyOwner {
-        for(uint index = 0; index < attributeIndexes.length; index++) {
-            currentHolders[_to].data.push(attributeValueCollection[attributeNames[index]][attributeIndexes[index]]);
-        }
+    function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external onlyOwner {
+        uint attributeIndex = getIndexOfAttribute(_attributeName);
+        currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]][_modifiedValueIndex];
         emit ModifiedAttributes(_to);
     }
-
-    function modifyAttributeByName(address _to, bytes32 attributeName, uint modifiedValueIndex) external onlyOwner {
-        modifyAttributeByIndex(_to, getIndexOfAttribute(attributeName), modifiedValueIndex);
-    }
-
-    function modifyAttributeByIndex(address _to, uint attributeIndex, uint modifiedValueIndex) public onlyOwner {
-        currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]][modifiedValueIndex];        
-        emit ModifiedAttributes(_to);
-    }    
 
     function requestMembership(uint[] attributeIndexes) external isNotACurrentHolder payable {
         //Do some checks before assigning membership
