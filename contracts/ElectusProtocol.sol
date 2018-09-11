@@ -31,8 +31,12 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         supportedInterfaces[0x83adfb2d] = true; //Ownable
         attributeNames.push("hair");
         attributeNames.push("skin");
+        attributeNames.push("height");
         attributeValueCollection["hair"].push("black");
+        attributeValueCollection["hair"].push("white");
         attributeValueCollection["skin"].push("black");
+        attributeValueCollection["skin"].push("white");
+        attributeValueCollection["height"].push("1.5");
     }
 
     modifier isCurrentHolder {
@@ -72,31 +76,14 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         return getAttributeByIndex(_to, index);
     }
 
-    function getAttributeByIndex(address _to, uint _attributeIndex) public view returns (bytes32) {
-        require(attributeNames.length > _attributeIndex, "Required attribute doesn't exist");
-        return currentHolders[_to].data[_attributeIndex];
-    }
-
+    //ToDo: not accepting float numbers in values
     function addAttributeSet(bytes32 _name, bytes32[] values) external {
         attributeNames.push(_name);
         attributeValueCollection[_name] = values;
     }
-
-    function modifyAttributes(address _to, uint[] attributeIndexes) external onlyOwner {
-        for(uint index = 0; index < attributeIndexes.length; index++) {
-            currentHolders[_to].data.push(attributeValueCollection[attributeNames[index]][attributeIndexes[index]]);
-        }
-        emit ModifiedAttributes(_to);
-    }
-
     function modifyAttributeByName(address _to, bytes32 attributeName, uint modifiedValueIndex) external onlyOwner {
         modifyAttributeByIndex(_to, getIndexOfAttribute(attributeName), modifiedValueIndex);
     }
-
-    function modifyAttributeByIndex(address _to, uint attributeIndex, uint modifiedValueIndex) public onlyOwner {
-        currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]][modifiedValueIndex];        
-        emit ModifiedAttributes(_to);
-    }    
 
     function requestMembership(uint[] attributeIndexes) external isNotACurrentHolder payable {
         //Do some checks before assigning membership

@@ -63,7 +63,6 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     function addAttributeSet(bytes32 _name, bytes32[] values) external;
     ///  Use appropriate checks for whether a user/admin can modify the data.
     ///  Best practice is to use onlyOwner modifier from ERC173.
-    function modifyAttributes(address _to, uint[] attributeIndexes) external;
 
     function modifyAttributeByName(address _to, bytes32 attributeName, uint modifiedValueIndex) external;
 

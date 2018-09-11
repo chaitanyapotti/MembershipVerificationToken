@@ -1,16 +1,11 @@
 var ElectusProtocol = artifacts.require("./ElectusProtocol.sol");
 
 contract("ElectusProtocol", function(accounts) {
-  it("get data for a current member", async () => {
-    const electusprotocol = await ElectusProtocol.deployed();
-    await electusprotocol.assignTo(accounts[1], ["black"], {
-      from: accounts[0]
-    });
-    data = await electusprotocol.getData.call(accounts[1]);
-    assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
-  });
   it("he is a current member", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
+    await electusprotocol.assignTo(accounts[1], [0], {
+      from: accounts[0]
+    });
     data = await electusprotocol.isCurrentMember(accounts[1]);
     assert.equal(data, true);
   });
@@ -24,6 +19,11 @@ contract("ElectusProtocol", function(accounts) {
     data = await electusprotocol.getAllMembers();
     assert.equal(data[0], accounts[1]);
   });
+  it("list of attributes Names", async () => {
+    const electusprotocol = await ElectusProtocol.deployed();
+    data = await electusprotocol.getAttributeNames();
+    assert.equal(web3.toAscii(data[1]).replace(/\u0000/g, ""), "skin", 32);
+  });
   it("total memebers count", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
     member_count = await electusprotocol.totalMemberCount();
@@ -31,24 +31,35 @@ contract("ElectusProtocol", function(accounts) {
   });
   it("list of attributes", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
-    attribute_names = await electusprotocol.getAttributeNames();
-    assert.equal(attribute_names, ["hair", "5.1"]);
+    data = await electusprotocol.getAttributes(accounts[1]);
+    assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
   });
-  it("modifies data", async () => {
+  it("gets attribute by name", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
-    await electusprotocol.modifyData(accounts[1], ["banana"], {
-      from: accounts[0]
-    });
-    data = await electusprotocol.getData.call(accounts[1]);
-    assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "banana", 32);
+    data = await electusprotocol.getAttributeByName(accounts[1], "hair");
+    assert.equal(web3.toAscii(data).replace(/\u0000/g, ""), "black", 32);
+  });
+  it("adds a set of attributes", async () => {
+    const electusprotocol = await ElectusProtocol.deployed();
+    await electusprotocol.addAttributeSet("height", ["5", "6"]);
+    data = await electusprotocol.getAttributeNames();
+    assert.equal(web3.toAscii(data[2]).replace(/\u0000/g, ""), "height", 32);
+  });
+  it("modifies attribute by name", async () => {
+    const electusprotocol = await ElectusProtocol.deployed();
+    await electusprotocol.modifyAttributeByName(accounts[1], "hair", 0);
+    data = await electusprotocol.getAttributes(accounts[1]);
+    assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("request memebership", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
-    await electusprotocol.requestMembership(["grape"], {
+    await electusprotocol.requestMembership([0], {
       from: accounts[2]
     });
     data = await electusprotocol.getAllMembers();
+    attr = await electusprotocol.getAttributes(accounts[2]);
     assert.equal(data[1], accounts[2]);
+    assert.equal(web3.toAscii(attr[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("self revoke memebership", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
