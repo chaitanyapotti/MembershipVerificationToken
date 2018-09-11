@@ -58,10 +58,6 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         return allHolders;
     }
 
-    function totalMemberCount() external view returns (uint) {
-        return allHolders.length;
-    }
-
     function getAttributeNames() external view returns (bytes32[]) {
         return attributeNames;
     }
@@ -73,16 +69,18 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
 
     function getAttributeByName(address _to, bytes32 attribute) external view returns (bytes32) {
         uint index = getIndexOfAttribute(attribute);
-        return getAttributeByIndex(_to, index);
+        return currentHolders[_to].data[index];
     }
 
-    //ToDo: not accepting float numbers in values
     function addAttributeSet(bytes32 _name, bytes32[] values) external {
         attributeNames.push(_name);
         attributeValueCollection[_name] = values;
     }
-    function modifyAttributeByName(address _to, bytes32 attributeName, uint modifiedValueIndex) external onlyOwner {
-        modifyAttributeByIndex(_to, getIndexOfAttribute(attributeName), modifiedValueIndex);
+
+    function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external onlyOwner {
+        uint attributeIndex = getIndexOfAttribute(_attributeName);
+        currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]][_modifiedValueIndex];
+        emit ModifiedAttributes(_to);
     }
 
     function requestMembership(uint[] attributeIndexes) external isNotACurrentHolder payable {

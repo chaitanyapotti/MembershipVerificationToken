@@ -5,7 +5,8 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /// @title ERC-1261 MVT Standard
 /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
-///  Note: the ERC-165 identifier for this interface is 0x912f7bb2.
+///  The constructor should define the attribute set for this MVT.
+///  Note: the ERC-165 identifier for this interface is 0x1d8362cf.
 interface IERC1261 /* is ERC173, ERC165 */ {
     /// @dev This emits when a token is assigned to a member.
     event Assigned(address indexed to);
@@ -30,50 +31,55 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     /// @return List of addresses who have owned the token and currently own the token.
     function getAllMembers() external view returns (address[]);
 
-    /// @dev Returns the count of past and present members.
-    /// @return count of members who have owned the token.
-    function totalMemberCount() external view returns (uint);
-
     /// @notice Returns the list of all attribute names
     /// @dev Returns the names of attributes as a bytes32 array. 
+    ///  attributeNames are stored in a bytes32 Array.
+    ///  possible values for each attributeName are stored in a mapping(attributeName => attributeValues)
+    ///  attributeName is bytes32 and attributeValues is bytes32[].
+    ///  attributes of a particular user are stored in bytes32[].
+    ///  which has a single attributeValue for each attributeName in an array
     ///  Use web3.toAscii(data[0]).replace(/\u0000/g, "") to convert to string in JS.
     /// @return the names of attributes
     function getAttributeNames() external view returns (bytes32[]);
 
     /// @notice Returns the attributes of `_to` address.
     /// @dev Throws if `_to` is the zero address.
-    ///  returns the attributes associated with `_to` address.
     ///  Use web3.toAscii(data[0]).replace(/\u0000/g, "") to convert to string in JS.
+    /// @param _to the address whose current attributes are to be returned
     /// @return the attributes associated with `_to` address.
     function getAttributes(address _to) external view returns (bytes32[]);
 
-    /// @notice returns the attribute at `attributeIndex` stored against `_to` address
-    /// @dev Throws if the attribute index is out of bounds.
-    ///  returns the attribute at the specified index.
-    /// @return the attribute at the specified index.
-    function getAttributeByIndex(address _to, uint attributeIndex) external view returns (bytes32);
-
-    /// @notice returns the `attribute` stored against `_to` address
+    /// @notice Returns the `attribute` stored against `_to` address
     /// @dev Finds the index of the `attribute`
     ///  Throws if the attribute is not present in the predefined attributes
-    /// @return the attribute at the specified name
+    ///  returns the attributeValue for the specified `attribute`.
+    /// @param _to the address whose attribute is requested.
+    /// @param attribute the attribute name which is required.
+    /// @return the attribute value at the specified name.
     function getAttributeByName(address _to, bytes32 attribute) external view returns (bytes32);
 
-    
+    /// @notice adds a new attribute (key, value) pair to the set of pre-existing attributes.
+    /// @dev adds a new attribute at the end of the array of attributes and maps it to `values`.
+    ///  contract can set a max number of attributes and throw if limit is reached
+    /// @param _name Name of the attribute which is to be added
+    /// @param values list of values of the specified attribute
     function addAttributeSet(bytes32 _name, bytes32[] values) external;
-    ///  Use appropriate checks for whether a user/admin can modify the data.
+    
+    /// @notice Modifies the attribute value of a specific attribute for a given `_to` address 
+    /// @dev Use appropriate checks for whether a user/admin can modify the data.
     ///  Best practice is to use onlyOwner modifier from ERC173.
-
-    function modifyAttributeByName(address _to, bytes32 attributeName, uint modifiedValueIndex) external;
-
-    function modifyAttributeByIndex(address _to, uint attributeIndex, uint modifiedValueIndex) external;
+    /// @param _to the address whose attribute is being modified.
+    /// @param _attributeName the attribute name which is being modified
+    /// @param _modifiedValueIndex the index of the new value which is being assigned to the user attribute
+    function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external;
 
     /// @notice Requests membership from any address.
     /// @dev Throws if the `msg.sender` already has the token.
     ///  the individual `msg.sender` can request for a membership and if some exisiting criteria are satisfied,
     ///  the individual `msg.sender` receives the token.
     ///  When the token is assigned, this function emits the Assigned event.
-    /// @param data the data associated with the member.
+    /// @param data the attribute data associated with the member.
+    ///  This is an array which contains indexes of attributes
     function requestMembership(uint[] data) external payable;
 
     /// @notice Revokes membership from any address.
@@ -89,7 +95,8 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     ///  The entity assigns the membership to each individual.
     ///  When the token is assigned, this function emits the Assigned event.
     /// @param _to the address to which the token is assigned.
-    /// @param data the data associated with the address.
+    /// @param data the attribute data associated with the member.
+    ///  This is an array which contains indexes of attributes
     function assignTo(address _to, uint[] data) external;
 
     /// @notice Only Owner can revoke the membership
