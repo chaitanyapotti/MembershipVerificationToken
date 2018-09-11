@@ -41,24 +41,33 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     function getAttributeNames() external view returns (bytes32[]);
 
     /// @notice Returns the attributes of `_to` address.
-    /// @dev Throws if `_to` is the zero address
+    /// @dev Throws if `_to` is the zero address.
     ///  returns the attributes associated with `_to` address.
+    ///  Use web3.toAscii(data[0]).replace(/\u0000/g, "") to convert to string in JS.
+    /// @return the attributes associated with `_to` address.
     function getAttributes(address _to) external view returns (bytes32[]);
 
-    ///@notice Gets the data associated with a user.
-    /// @dev Gets the data associated with a member as a bytes32 Array. 
-    ///  Use web3.toAscii(data[0]).replace(/\u0000/g, "") to convert to string in JS.
-    /// @param _to An address for whom to query the membership.
-    /// @return the data associated with the member.
-    function getData(address _to) external view returns (bytes32[]);
+    /// @notice returns the attribute at `attributeIndex` stored against `_to` address
+    /// @dev Throws if the attribute index is out of bounds.
+    ///  returns the attribute at the specified index.
+    /// @return the attribute at the specified index.
+    function getAttributeByIndex(address _to, uint attributeIndex) external view returns (bytes32);
 
-    /// @notice Modifies the data assoicated with a user.
-    /// @dev Input format must be a bytes32 array.
+    /// @notice returns the `attribute` stored against `_to` address
+    /// @dev Finds the index of the `attribute`
+    ///  Throws if the attribute is not present in the predefined attributes
+    /// @return the attribute at the specified name
+    function getAttributeByName(address _to, bytes32 attribute) external view returns (bytes32);
+
+    
+    function addAttributeSet(bytes32 _name, bytes32[] values) external;
     ///  Use appropriate checks for whether a user/admin can modify the data.
     ///  Best practice is to use onlyOwner modifier from ERC173.
-    /// @param _to An address for whom to query the membership.
-    /// @param newData the new data which is to be stored against the user.
-    function modifyData(address _to, uint[] newData) external;
+    function modifyAttributes(address _to, uint[] attributeIndexes) external;
+
+    function modifyAttributeByName(address _to, bytes32 attributeName, uint modifiedValueIndex) external;
+
+    function modifyAttributeByIndex(address _to, uint attributeIndex, uint modifiedValueIndex) external;
 
     /// @notice Requests membership from any address.
     /// @dev Throws if the `msg.sender` already has the token.
