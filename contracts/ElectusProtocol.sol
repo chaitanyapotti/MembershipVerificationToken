@@ -46,7 +46,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     }
 
     function isCurrentMember(address _to) public view returns (bool){
-        require(_to != address(0));
+        require(_to != address(0), "Zero address can't be a member");
         return currentHolders[_to].hasToken;
     }
 
@@ -72,8 +72,14 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         return getAttributeByIndex(_to, index);
     }
 
-    function getAttributeByIndex(address _to, uint attributeIndex) public view returns (bytes32) {
-        return currentHolders[_to].data[attributeIndex];
+    function getAttributeByIndex(address _to, uint _attributeIndex) public view returns (bytes32) {
+        require(attributeNames.length > _attributeIndex, "Required attribute doesn't exist");
+        return currentHolders[_to].data[_attributeIndex];
+    }
+
+    function addAttributeSet(bytes32 _name, bytes32[] values) external {
+        attributeNames.push(_name);
+        attributeValueCollection[_name] = values;
     }
 
     function modifyAttributes(address _to, uint[] attributeIndexes) external onlyOwner {
@@ -110,7 +116,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     }
 
     function _assign(address _to, uint[] attributeIndexes) private {
-        require(_to != address(0));        
+        require(_to != address(0), "Can't assign to zero address");        
         MemberData memory member;
         member.hasToken = true;
         currentHolders[_to] = member;
@@ -122,7 +128,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     }
 
     function _revoke(address _from) private {
-        require(_from != address(0));
+        require(_from != address(0), "Can't revoke from zero address");
         MemberData storage member = currentHolders[_from];
         member.hasToken = false;
         emit Revoked(_from);
