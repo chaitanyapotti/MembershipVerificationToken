@@ -6,18 +6,18 @@ import "./Protocol/IElectusProtocol.sol";
 
 contract ERC1261MetaData is ElectusProtocol, IERC1261Metadata {
 
-    string internal _orgName;
-    string internal _orgSymbol;
+    string internal orgName;
+    string internal orgSymbol;
     
     constructor() public {
         supportedInterfaces[0x93254542] = true;
     }
 
     function name() external view returns (string) {
-        return _orgName;
+        return orgName;
     }
     
-    function symbol() external view returns (string){
-        return _orgSymbol;
+    function symbol() external view returns (string) {
+        return orgSymbol;
     }
 }

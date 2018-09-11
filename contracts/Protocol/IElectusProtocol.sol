@@ -1,7 +1,7 @@
 pragma solidity ^0.4.24;
 
-import "zeppelin-solidity/contracts/introspection/ERC165.sol";
-import "zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/introspection/ERC165.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /// @title ERC-1261 MVT Standard
 /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
@@ -34,6 +34,17 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     /// @return count of members who have owned the token.
     function totalMemberCount() external view returns (uint);
 
+    /// @notice Returns the list of all attribute names
+    /// @dev Returns the names of attributes as a bytes32 array. 
+    ///  Use web3.toAscii(data[0]).replace(/\u0000/g, "") to convert to string in JS.
+    /// @return the names of attributes
+    function getAttributeNames() external view returns (bytes32[]);
+
+    /// @notice Returns the attributes of `_to` address.
+    /// @dev Throws if `_to` is the zero address
+    ///  returns the attributes associated with `_to` address.
+    function getAttributes(address _to) external view returns (bytes32[]);
+
     ///@notice Gets the data associated with a user.
     /// @dev Gets the data associated with a member as a bytes32 Array. 
     ///  Use web3.toAscii(data[0]).replace(/\u0000/g, "") to convert to string in JS.
@@ -44,10 +55,10 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     /// @notice Modifies the data assoicated with a user.
     /// @dev Input format must be a bytes32 array.
     ///  Use appropriate checks for whether a user/admin can modify the data.
-    ///  Best practice include using onlyOwner modifier from ERC173.
+    ///  Best practice is to use onlyOwner modifier from ERC173.
     /// @param _to An address for whom to query the membership.
     /// @param newData the new data which is to be stored against the user.
-    function modifyData(address _to, bytes32[] newData) external;
+    function modifyData(address _to, uint[] newData) external;
 
     /// @notice Requests membership from any address.
     /// @dev Throws if the `msg.sender` already has the token.
@@ -55,7 +66,7 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     ///  the individual `msg.sender` receives the token.
     ///  When the token is assigned, this function emits the Assigned event.
     /// @param data the data associated with the member.
-    function requestMembership(bytes32[] data) external payable;
+    function requestMembership(uint[] data) external payable;
 
     /// @notice Revokes membership from any address.
     /// @dev Throws if the `msg.sender` already doesn't have the token.
@@ -71,7 +82,7 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     ///  When the token is assigned, this function emits the Assigned event.
     /// @param _to the address to which the token is assigned.
     /// @param data the data associated with the address.
-    function assignTo(address _to, bytes32[] data) external;
+    function assignTo(address _to, uint[] data) external;
 
     /// @notice Only Owner can revoke the membership
     /// @dev This removes the membership of the user.
