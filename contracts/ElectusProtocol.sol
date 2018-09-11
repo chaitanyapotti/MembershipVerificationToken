@@ -29,7 +29,10 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     constructor () public {
         supportedInterfaces[0x912f7bb2] = true; //IERC1261
         supportedInterfaces[0x83adfb2d] = true; //Ownable
-        //attributeNames = ["hello", "world"];
+        attributeNames.push("hair");
+        attributeNames.push("skin");
+        attributeValueCollection["hair"].push("black");
+        attributeValueCollection["skin"].push("black");
     }
 
     modifier isCurrentHolder {

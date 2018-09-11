@@ -3,11 +3,11 @@ var ElectusProtocol = artifacts.require("./ElectusProtocol.sol");
 contract("ElectusProtocol", function(accounts) {
   it("get data for a current member", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
-    await electusprotocol.assignTo(accounts[1], ["orange"], {
+    await electusprotocol.assignTo(accounts[1], ["black"], {
       from: accounts[0]
     });
     data = await electusprotocol.getData.call(accounts[1]);
-    assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "orange", 32);
+    assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("he is a current member", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
@@ -28,6 +28,11 @@ contract("ElectusProtocol", function(accounts) {
     const electusprotocol = await ElectusProtocol.deployed();
     member_count = await electusprotocol.totalMemberCount();
     assert.equal(member_count, 1);
+  });
+  it("list of attributes", async () => {
+    const electusprotocol = await ElectusProtocol.deployed();
+    attribute_names = await electusprotocol.getAttributeNames();
+    assert.equal(attribute_names, ["hair", "5.1"]);
   });
   it("modifies data", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
