@@ -42,8 +42,7 @@ jobs:
       # Save test results
       - store_test_results:
           path: test-results.xml
-      - store_artifacts:
-          path: test-results.xml
+          prefix: test
 
 workflows:
   version: 2
