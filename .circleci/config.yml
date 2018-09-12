@@ -16,6 +16,7 @@ step_setup_global_packages: &step_setup_global_packages
     name: "Set up global packages"
     command: |
       sudo npm install -g truffle
+      npm install
 
 jobs:
   build:
