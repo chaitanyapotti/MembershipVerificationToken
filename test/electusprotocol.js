@@ -24,11 +24,6 @@ contract("ElectusProtocol", function(accounts) {
     data = await electusprotocol.getAttributeNames();
     assert.equal(web3.toAscii(data[1]).replace(/\u0000/g, ""), "skin", 32);
   });
-  it("total memebers count", async () => {
-    const electusprotocol = await ElectusProtocol.deployed();
-    member_count = await electusprotocol.totalMemberCount();
-    assert.equal(member_count, 1);
-  });
   it("list of attributes", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
     data = await electusprotocol.getAttributes(accounts[1]);
