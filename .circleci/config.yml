@@ -41,8 +41,7 @@ jobs:
       - <<: *step_save_cache
       # Save test results
       - store_test_results:
-          path: test-results.xml
-          prefix: test
+          path: /results
 
 workflows:
   version: 2
