@@ -10,8 +10,7 @@ step_save_cache: &step_save_cache
       - node_modules
 step_restore_cache: &step_restore_cache
   restore_cache:
-    key:
-      - dependency-cache-{{ checksum "package.json" }}
+    key: dependency-cache-{{ checksum "package.json" }}
 step_setup_global_packages: &step_setup_global_packages
   run:
     name: "Set up global packages"
