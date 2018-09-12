@@ -35,7 +35,7 @@ After installing either Framework, to install the Electus Protocol library, run 
 
 ```sh
 npm init -y
-npm install --save electus-protocol
+npm install --save electusprotocol
 ```
 
 After that, you'll get all the library's contracts in the `node_modules/electusprotocol/contracts` folder. You can use the contracts in the library like so:
