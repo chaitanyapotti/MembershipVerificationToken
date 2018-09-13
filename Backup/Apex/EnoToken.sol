@@ -31,7 +31,7 @@ contract EnoToken is IElectusProtocol, Ownable {
         emit Assigned(to);
     }
 
-    function revokeMembership(address to) public {
+    function forfeitMembership(address to) public {
         require(currentHolders[to] == 1, "The user is not a current member");
         require(to == msg.sender || msg.sender == owner, "Not enough rights");
         currentHolders[to] = 0;
@@ -39,7 +39,7 @@ contract EnoToken is IElectusProtocol, Ownable {
     }
 
     function transferRights(address to) public {
-        revokeMembership(msg.sender);
+        forfeitMembership(msg.sender);
         assignMembership(to);
     }
 

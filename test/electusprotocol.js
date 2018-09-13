@@ -58,7 +58,7 @@ contract("ElectusProtocol", function(accounts) {
   });
   it("self revoke memebership", async () => {
     const electusprotocol = await ElectusProtocol.deployed();
-    await electusprotocol.revokeMembership({
+    await electusprotocol.forfeitMembership({
       from: accounts[2]
     });
     data = await electusprotocol.isCurrentMember(accounts[2]);

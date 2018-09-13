@@ -72,7 +72,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
         /// @dev Throws if the `msg.sender` already doesn't have the token.
         ///  the individual `msg.sender` can revoke his/her membership.
         ///  When the token is revoked, this function emits the Revoked event.
-        function revokeMembership() external payable;
+        function forfeitMembership() external payable;
 
         /// @notice Assigns membership of an MVT from owner address to another address
         /// @dev Throws if the member already has the token.
@@ -257,7 +257,7 @@ The complete implementation is available at the `github repo <https://github.com
             _assign(msg.sender, data);
         }
 
-        function revokeMembership() external isCurrentHolder payable {
+        function forfeitMembership() external isCurrentHolder payable {
             _revoke(msg.sender);
         }
 

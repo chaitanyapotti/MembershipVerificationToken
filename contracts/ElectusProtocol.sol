@@ -88,7 +88,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         _assign(msg.sender, attributeIndexes);
     }
 
-    function revokeMembership() external isCurrentHolder payable {
+    function forfeitMembership() external isCurrentHolder payable {
         _revoke(msg.sender);
     }
 
