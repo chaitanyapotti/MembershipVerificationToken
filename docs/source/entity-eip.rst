@@ -68,7 +68,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
         /// @param data the data associated with the member.
         function requestMembership(bytes32[] data) external payable;
 
-        /// @notice Revokes membership from any address.
+        /// @notice User can forfeit his membership.
         /// @dev Throws if the `msg.sender` already doesn't have the token.
         ///  the individual `msg.sender` can revoke his/her membership.
         ///  When the token is revoked, this function emits the Revoked event.

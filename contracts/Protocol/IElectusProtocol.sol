@@ -82,7 +82,7 @@ interface IERC1261 /* is ERC173, ERC165 */ {
     ///  This is an array which contains indexes of attributes.
     function requestMembership(uint[] data) external payable;
 
-    /// @notice Revokes membership from any address.
+    /// @notice User can forfeit his membership.
     /// @dev Throws if the `msg.sender` already doesn't have the token.
     ///  The individual `msg.sender` can revoke his/her membership.
     ///  When the token is revoked, this function emits the Revoked event.
