@@ -8,14 +8,14 @@ bc_client="ganache-cli"
 
 echo "Chosen client $bc_client"
 
-bc_client_port=8545
+bc_client_port=7545
 
 bc_client_running() {
   nc -z localhost "$bc_client_port"
 }
 
 start_ganache() {
-  node_modules/.bin/ganache-cli --noVMErrorsOnRPCResponse >/dev/null 2>&1
+  node_modules/.bin/ganache-cli --noVMErrorsOnRPCResponse --port=7545 >/dev/null 2>&1
 }
 
 if bc_client_running; then
