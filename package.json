@@ -10,7 +10,8 @@
     "start:blockchain:client": "bash ./scripts/start-blockchain.sh",
     "stop:blockchain:client": "bash ./scripts/stop-blockchain.sh",
     "test": "npm run start:blockchain:client & truffle migrate --reset --compile-all && truffle test --network development",
-    "post-test": "npm run stop:blockchain:client"
+    "post-test": "npm run stop:blockchain:client",
+    "coverage": "./node_modules/.bin/solidity-coverage"
   },
   "files": [
     "contracts",
@@ -40,6 +41,7 @@
     "openzeppelin-solidity": "^1.12.0"
   },
   "devDependencies": {
-    "coveralls": "^3.0.2"
+    "coveralls": "^3.0.2",
+    "solidity-coverage": "^0.5.11"
   }
 }
