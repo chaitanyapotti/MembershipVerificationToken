@@ -1,6 +1,6 @@
 {
   "name": "electusprotocol",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Standard Implementation and interface for Electus Protocol",
   "main": "truffle.js",
   "directories": {
@@ -38,5 +38,8 @@
   "dependencies": {
     "ganache-cli": "^6.1.8",
     "openzeppelin-solidity": "^1.12.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.2"
   }
 }
