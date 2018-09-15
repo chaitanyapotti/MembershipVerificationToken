@@ -114,8 +114,8 @@ interface IERC1261 /* is ERC173, ERC165 */ {
 ///  Note: the ERC-1261 identifier for this interface is 0x93254542.
 interface IERC1261Metadata /* is ERC1261 */ {
     /// @notice A descriptive name for a collection of MTs in this contract.
-    function name() external view returns (string);
+    function name() external view returns (bytes32);
 
     /// @notice An abbreviated name for MTs in this contract.
-    function symbol() external view returns (string);
+    function symbol() external view returns (bytes32);
 }
