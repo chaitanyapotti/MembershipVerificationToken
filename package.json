@@ -11,7 +11,7 @@
     "stop:blockchain:client": "bash ./scripts/stop-blockchain.sh",
     "test": "npm run start:blockchain:client & truffle migrate --reset --compile-all && truffle test --network development",
     "post-test": "npm run stop:blockchain:client",
-    "coverage": "node_modules/.bin/testrpc-sc --gasLimit 0xfffffffffff --port 8555 & SOLIDITY_COVERAGE=1 ./node_modules/.bin/solidity-coverage && istanbul check-coverage"
+    "coverage": "./node_modules/.bin/solidity-coverage && istanbul check-coverage"
   },
   "files": [
     "contracts",
