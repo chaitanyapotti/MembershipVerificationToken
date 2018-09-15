@@ -1,6 +1,6 @@
 module.exports = {
-  testrpcOptions: `--port 8555 -i 1999 --noVMErrorsOnRPCResponse`,
+  norpc: true,
   testCommand: "node --max-old-space-size=4096 truffle test --network coverage",
-  compileCommand: "truffle compile",
+  compileCommand: "truffle compile --network coverage",
   copyPackages: ["openzeppelin-solidity", "ganache-cli"]
 };
