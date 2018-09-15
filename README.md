@@ -5,7 +5,7 @@
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/ElectusProtocol/Lobby)
 [![CircleCI](https://circleci.com/gh/chaitanyapotti/ElectusProtocol/tree/master.svg?style=shield)](https://circleci.com/gh/chaitanyapotti/ElectusProtocol/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/chaitanyapotti/ElectusProtocol.svg)](https://greenkeeper.io/)
-[![Coverage Status](https://coveralls.io/repos/github/chaitanyapotti/ElectusProtocol/badge.svg?branch=master)](https://coveralls.io/github/chaitanyapotti/ElectusProtocol?branch=master)
+[![codecov](https://codecov.io/gh/chaitanyapotti/ElectusProtocol/branch/master/graph/badge.svg)](https://codecov.io/gh/chaitanyapotti/ElectusProtocol)
 
 ## Install
 
