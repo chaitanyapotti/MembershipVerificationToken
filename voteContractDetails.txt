@@ -934,4 +934,4 @@ const name = await contractInstance.methods.getName().call();
 const pollType = await contractInstance.methods.getPollType().call();
 const protocolAddresses = await contractInstance.methods.getprotocolAddresses().call();
 
-//node_modules/.bin/testrpc-sc --gasLimit 0xfffffffffff --port 8555 & SOLIDITY_COVERAGE=1 
+//node_modules/.bin/testrpc-sc --gasLimit 0xfffffffffff --port 8555 & SOLIDITY_COVERAGE=1  && istanbul check-coverage
