@@ -52,7 +52,7 @@ jobs:
       - run:
           name: "Running unit tests with coverage"
           command: npm run coverage
-      -run:
+      - run:
           name: "Upload Coverage"
           command: bash <(curl -s https://codecov.io/bash)
       # Save coverage artifacts
