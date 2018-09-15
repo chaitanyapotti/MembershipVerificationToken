@@ -1,4 +1,4 @@
-var ERC1261Metadata = artifacts.require("./ERC1261Metadata.sol")
+var ERC1261Metadata = artifacts.require("./ERC1261MetaData.sol")
 
 contract ("metadata test", function(accounts){
     beforeEach("setup", async()=>{
