@@ -1,6 +1,6 @@
 module.exports = {
-  testCommand:
-    "npm run start:blockchain:client & truffle test --network development",
-  norpc: true,
+  testrpcOptions: `--port 8555 -i 1999 --noVMErrorsOnRPCResponse`,
+  testCommand: "truffle test --network coverage",
+  compileCommand: "../node_modules/.bin/truffle compile",
   copyPackages: ["openzeppelin-solidity"]
 };
