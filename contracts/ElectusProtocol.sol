@@ -69,6 +69,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
 
     function getAttributeByName(address _to, bytes32 attribute) external view returns (bytes32) {
         uint index = getIndexOfAttribute(attribute);
+        require(currentHolders[_to].data.length > index, "data doesn't exist for the user");
         return currentHolders[_to].data[index];
     }
 
