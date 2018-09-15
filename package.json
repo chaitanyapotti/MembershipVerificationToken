@@ -11,7 +11,7 @@
     "stop:blockchain:client": "bash ./scripts/stop-blockchain.sh",
     "test": "npm run start:blockchain:client & truffle migrate --reset --compile-all && truffle test --network development",
     "post-test": "npm run stop:blockchain:client",
-    "coverage": "./node_modules/.bin/solidity-coverage"
+    "coverage": "touch allFiredEvents & ./node_modules/.bin/solidity-coverage"
   },
   "files": [
     "contracts",
