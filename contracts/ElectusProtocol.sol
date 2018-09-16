@@ -80,6 +80,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
 
     function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external onlyOwner {
         uint attributeIndex = getIndexOfAttribute(_attributeName);
+        require(currentHolders[_to].data.length > attributeIndex, "data doesn't exist for the user");
         currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]][_modifiedValueIndex];
         emit ModifiedAttributes(_to);
     }
