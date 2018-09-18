@@ -9,7 +9,7 @@ import "./Protocol/IElectusProtocol.sol";
 
 
 contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
-    struct MemberData{
+    struct MemberData {
         bool hasToken;
         bytes32[] data;
     }
@@ -49,9 +49,34 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         _;
     }
 
-    function isCurrentMember(address _to) public view returns (bool){
-        require(_to != address(0), "Zero address can't be a member");
-        return currentHolders[_to].hasToken;
+    function requestMembership(uint[] attributeIndexes) external isNotACurrentHolder payable {
+        //Do some checks before assigning membership
+        _assign(msg.sender, attributeIndexes);
+    }
+
+    function forfeitMembership() external isCurrentHolder payable {
+        _revoke(msg.sender);
+    }
+
+    function assignTo(address _to, uint[] attributeIndexes) external onlyOwner {
+        _assign(_to, attributeIndexes);
+    }
+
+    function revokeFrom(address _from) external onlyOwner {
+        _revoke(_from);
+    }
+
+    function addAttributeSet(bytes32 _name, bytes32[] values) external {
+        attributeNames.push(_name);
+        attributeValueCollection[_name] = values;
+    }
+
+    function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external onlyOwner {
+        uint attributeIndex = getIndexOfAttribute(_attributeName);
+        require(currentHolders[_to].data.length > attributeIndex, "data doesn't exist for the user");
+        currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]]
+        [_modifiedValueIndex];
+        emit ModifiedAttributes(_to);
     }
 
     function getAllMembers() external view returns (address[]) {
@@ -73,33 +98,23 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         return currentHolders[_to].data[index];
     }
 
-    function addAttributeSet(bytes32 _name, bytes32[] values) external {
-        attributeNames.push(_name);
-        attributeValueCollection[_name] = values;
+    function isCurrentMember(address _to) public view returns (bool) {
+        require(_to != address(0), "Zero address can't be a member");
+        return currentHolders[_to].hasToken;
     }
-
-    function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external onlyOwner {
-        uint attributeIndex = getIndexOfAttribute(_attributeName);
-        require(currentHolders[_to].data.length > attributeIndex, "data doesn't exist for the user");
-        currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]][_modifiedValueIndex];
-        emit ModifiedAttributes(_to);
-    }
-
-    function requestMembership(uint[] attributeIndexes) external isNotACurrentHolder payable {
-        //Do some checks before assigning membership
-        _assign(msg.sender, attributeIndexes);
-    }
-
-    function forfeitMembership() external isCurrentHolder payable {
-        _revoke(msg.sender);
-    }
-
-    function assignTo(address _to, uint[] attributeIndexes) external onlyOwner {
-        _assign(_to, attributeIndexes);
-    }
-
-    function revokeFrom(address _from) external onlyOwner {
-        _revoke(_from);
+    
+    function getIndexOfAttribute(bytes32 attribute) internal view returns (uint) {
+        uint index = 0;
+        bool isAttributeFound = false;
+        for (uint i = 0; i < attributeNames.length; i++) {
+            if (attributeNames[i] == attribute) {
+                index = i;
+                isAttributeFound = true;
+                break;
+            }
+        }
+        require(isAttributeFound, "Invalid Attribute Name");
+        return index;
     }
 
     function _assign(address _to, uint[] attributeIndexes) private {
@@ -107,7 +122,7 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         MemberData memory member;
         member.hasToken = true;
         currentHolders[_to] = member;
-        for(uint index = 0; index < attributeIndexes.length; index++) {
+        for (uint index = 0; index < attributeIndexes.length; index++) {
             currentHolders[_to].data.push(attributeValueCollection[attributeNames[index]][attributeIndexes[index]]);
         }
         allHolders.push(_to);
@@ -119,19 +134,5 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
         MemberData storage member = currentHolders[_from];
         member.hasToken = false;
         emit Revoked(_from);
-    }
-    
-    function getIndexOfAttribute(bytes32 attribute) internal view returns (uint) {
-        uint index = 0;
-        bool isAttributeFound = false;
-        for(uint i = 0; i < attributeNames.length; i++) {
-            if(attributeNames[i] == attribute) {
-                index = i;
-                isAttributeFound = true;
-                break;
-            }
-        }
-        require(isAttributeFound, "Invalid Attribute Name");
-        return index;
     }
 }
