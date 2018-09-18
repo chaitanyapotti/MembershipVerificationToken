@@ -1,4 +1,5 @@
 var ElectusProtocol = artifacts.require("./ElectusProtocol.sol");
+const truffleAssert = require("truffle-assertions");
 
 contract("ElectusProtocol", function(accounts) {
   let electusProtocol;
@@ -6,9 +7,7 @@ contract("ElectusProtocol", function(accounts) {
     electusProtocol = await ElectusProtocol.new();
     await electusProtocol.addAttributeSet("0x68616972", ["0x626c61636b", "0x7768697465"]);
     await electusProtocol.addAttributeSet("0x736b696e", ["0x626c61636b", "0x7768697465"]);
-    await electusProtocol.assignTo(accounts[1], [0], {
-      from: accounts[0]
-    });
+    await electusProtocol.assignTo(accounts[1], [0], { from: accounts[0] });
   });
   it("he is a current member", async () => {
     const data = await electusProtocol.isCurrentMember(accounts[1]);
@@ -44,8 +43,9 @@ contract("ElectusProtocol", function(accounts) {
     assert.equal(web3.toAscii(data[2]).replace(/\u0000/g, ""), "height", 32);
   });
   it("modifies attribute by name", async () => {
-    await electusProtocol.modifyAttributeByName(accounts[1], "hair", 0);
+    const result = await electusProtocol.modifyAttributeByName(accounts[1], "hair", 0);
     const data = await electusProtocol.getAttributes(accounts[1]);
+    truffleAssert.eventEmitted(result, "ModifiedAttributes");
     // eslint-disable-next-line no-control-regex
     assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
   });
@@ -60,16 +60,18 @@ contract("ElectusProtocol", function(accounts) {
     assert.equal(web3.toAscii(attr[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("self revoke memebership", async () => {
-    await electusProtocol.forfeitMembership({
+    const revoke = await electusProtocol.forfeitMembership({
       from: accounts[1]
     });
+    truffleAssert.eventEmitted(revoke, "Revoked");
     const data = await electusProtocol.isCurrentMember(accounts[1]);
     assert.equal(data, false);
   });
   it("owner revokes memebership", async () => {
-    await electusProtocol.revokeFrom(accounts[1], {
+    const revoke = await electusProtocol.revokeFrom(accounts[1], {
       from: accounts[0]
     });
+    truffleAssert.eventEmitted(revoke, "Revoked");
     const data = await electusProtocol.isCurrentMember(accounts[1]);
     assert.equal(data, false);
   });

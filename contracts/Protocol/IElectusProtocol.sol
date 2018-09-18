@@ -17,7 +17,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
 
     /// @dev This emits when data of a member is modified. 
     ///  Doesn't emit when a new membership is created and data is assigned.
-    event ModifiedData(address indexed to);
+    event ModifiedAttributes(address indexed to);
 
     /// @notice Adds a new attribute (key, value) pair to the set of pre-existing attributes.
     /// @dev Adds a new attribute at the end of the array of attributes and maps it to `values`.
