@@ -31,5 +31,16 @@ module.exports = {
   },
   mocha: {
     useColors: true
+  },
+  compilers: {
+    solc: {
+      version: "0.4.25",
+      settings: {
+        optimizer: {
+          enabled: true, // Default: false
+          runs: 600 // Default: 200
+        }
+      }
+    }
   }
 };

@@ -24,30 +24,30 @@ contract("ElectusProtocol", function(accounts) {
   it("list of attributes Names", async () => {
     const data = await electusProtocol.getAttributeNames();
     // eslint-disable-next-line no-control-regex
-    assert.equal(web3.toAscii(data[1]).replace(/\u0000/g, ""), "skin", 32);
+    assert.equal(web3.utils.toAscii(data[1]).replace(/\u0000/g, ""), "skin", 32);
   });
   it("list of attributes of a member", async () => {
     const data = await electusProtocol.getAttributes(accounts[1]);
     // eslint-disable-next-line no-control-regex
-    assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
+    assert.equal(web3.utils.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("gets attribute of a member by name", async () => {
-    const data = await electusProtocol.getAttributeByName(accounts[1], "hair");
+    const data = await electusProtocol.getAttributeByName(accounts[1], web3.utils.fromAscii("hair"));
     // eslint-disable-next-line no-control-regex
-    assert.equal(web3.toAscii(data).replace(/\u0000/g, ""), "black", 32);
+    assert.equal(web3.utils.toAscii(data).replace(/\u0000/g, ""), "black", 32);
   });
   it("adds a set of attributes", async () => {
-    await electusProtocol.addAttributeSet("height", ["5", "6"]);
+    await electusProtocol.addAttributeSet(web3.utils.fromAscii("height"), [web3.utils.fromAscii("5"), web3.utils.fromAscii("6")]);
     const data = await electusProtocol.getAttributeNames();
     // eslint-disable-next-line no-control-regex
-    assert.equal(web3.toAscii(data[2]).replace(/\u0000/g, ""), "height", 32);
+    assert.equal(web3.utils.toAscii(data[2]).replace(/\u0000/g, ""), "height", 32);
   });
   it("modifies attribute by name", async () => {
-    const result = await electusProtocol.modifyAttributeByName(accounts[1], "hair", 0);
+    const result = await electusProtocol.modifyAttributeByName(accounts[1], web3.utils.fromAscii("hair"), 0);
     const data = await electusProtocol.getAttributes(accounts[1]);
     truffleAssert.eventEmitted(result, "ModifiedAttributes");
     // eslint-disable-next-line no-control-regex
-    assert.equal(web3.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
+    assert.equal(web3.utils.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("request memebership", async () => {
     await electusProtocol.requestMembership([0], {
@@ -57,7 +57,7 @@ contract("ElectusProtocol", function(accounts) {
     const attr = await electusProtocol.getAttributes(accounts[2]);
     assert.equal(data[1], accounts[2]);
     // eslint-disable-next-line no-control-regex
-    assert.equal(web3.toAscii(attr[0]).replace(/\u0000/g, ""), "black", 32);
+    assert.equal(web3.utils.toAscii(attr[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("self revoke memebership", async () => {
     const revoke = await electusProtocol.forfeitMembership({

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.25;
 
 
 //For truffle compilation, use path zeppelin-solidity/contracts/ownership/Ownable.sol

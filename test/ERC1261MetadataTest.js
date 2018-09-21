@@ -8,11 +8,11 @@ contract("metadata test", function(accounts) {
   it("gets name of the organisation", async () => {
     const name = await metadata.name();
     // eslint-disable-next-line no-control-regex
-    assert.equal(web3.toAscii(name).replace(/\u0000/g, ""), "Wanchain", 32);
+    assert.equal(web3.utils.toAscii(name).replace(/\u0000/g, ""), "Wanchain", 32);
   });
   it("gets symbol of the organisation", async () => {
     const symbol = await metadata.symbol();
     // eslint-disable-next-line no-control-regex
-    assert.equal(web3.toAscii(symbol).replace(/\u0000/g, ""), "WAN", 32);
+    assert.equal(web3.utils.toAscii(symbol).replace(/\u0000/g, ""), "WAN", 32);
   });
 });
