@@ -1,6 +1,6 @@
 {
   "name": "electusprotocol",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Standard Implementation and interface for Electus Protocol",
   "main": "truffle.js",
   "directories": {
