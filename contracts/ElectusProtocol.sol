@@ -4,11 +4,11 @@ pragma solidity ^0.4.25;
 //For truffle compilation, use path zeppelin-solidity/contracts/ownership/Ownable.sol
 //For linting purposes, use path zeppelin-solidity/ownership/Ownable.sol
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "openzeppelin-solidity/contracts/introspection/SupportsInterfaceWithLookup.sol";
+import "openzeppelin-solidity/contracts/introspection/ERC165.sol";
 import "./Protocol/IElectusProtocol.sol";
 
 
-contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
+contract ElectusProtocol is IERC1261, Ownable, ERC165 {
     struct MemberData {
         bool hasToken;
         bytes32[] data;
@@ -27,8 +27,8 @@ contract ElectusProtocol is IERC1261, Ownable, SupportsInterfaceWithLookup {
     event ModifiedAttributes(address indexed to);
 
     constructor () public {
-        supportedInterfaces[0x912f7bb2] = true; //IERC1261
-        supportedInterfaces[0x83adfb2d] = true; //Ownable
+        _supportedInterfaces[0x912f7bb2] = true; //IERC1261
+        _supportedInterfaces[0x83adfb2d] = true; //Ownable
         // attributeNames.push("hair");
         // attributeNames.push("skin");
         // attributeNames.push("height");

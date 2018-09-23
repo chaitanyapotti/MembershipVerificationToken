@@ -1,8 +1,5 @@
 pragma solidity ^0.4.25;
 
-import "openzeppelin-solidity/contracts/introspection/ERC165.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-
 
 /// @title ERC-1261 MVT Standard
 /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
