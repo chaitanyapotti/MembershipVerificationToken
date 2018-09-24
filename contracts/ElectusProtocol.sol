@@ -22,6 +22,8 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
 
     address[] public allHolders;
 
+    uint public currentMemberCount;
+
     event Assigned(address indexed to);
     event Revoked(address indexed to);
     event ModifiedAttributes(address indexed to);
@@ -44,12 +46,8 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         _;
     }
 
-    modifier isNotACurrentHolder {
+    function requestMembership(uint[] attributeIndexes) external payable {
         require(!isCurrentMember(msg.sender), "Already a member");
-        _;
-    }
-
-    function requestMembership(uint[] attributeIndexes) external isNotACurrentHolder payable {
         //Do some checks before assigning membership
         _assign(msg.sender, attributeIndexes);
     }
@@ -81,6 +79,10 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
 
     function getAllMembers() external view returns (address[]) {
         return allHolders;
+    }
+
+    function getCurrentMemberCount() external view returns (uint) {
+        return currentMemberCount;
     }
 
     function getAttributeNames() external view returns (bytes32[]) {
@@ -126,6 +128,7 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
             currentHolders[_to].data.push(attributeValueCollection[attributeNames[index]][attributeIndexes[index]]);
         }
         allHolders.push(_to);
+        currentMemberCount += 1;
         emit Assigned(_to);
     }
 
@@ -133,6 +136,7 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         require(_from != address(0), "Can't revoke from zero address");
         MemberData storage member = currentHolders[_from];
         member.hasToken = false;
+        currentMemberCount -= 1;
         emit Revoked(_from);
     }
 }

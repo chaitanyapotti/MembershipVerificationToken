@@ -21,6 +21,12 @@ contract("ElectusProtocol", function(accounts) {
     const data = await electusProtocol.getAllMembers();
     assert.equal(data[0], accounts[1]);
   });
+  it("gets current memeber count", async () => {
+    await electusProtocol.assignTo(accounts[2], [0], { from: accounts[0] });
+    await electusProtocol.revokeFrom(accounts[1], { from: accounts[0] });
+    const data = await electusProtocol.getCurrentMemberCount();
+    assert.equal(data, 1);
+  });
   it("list of attributes Names", async () => {
     const data = await electusProtocol.getAttributeNames();
     // eslint-disable-next-line no-control-regex
