@@ -2,6 +2,7 @@
 
 <!-- <img align="center" src="./img/colonyNetwork_color.svg" /> -->
 
+[![npm version](https://badge.fury.io/js/electusprotocol.svg)](https://badge.fury.io/js/electusprotocol)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/ElectusProtocol/Lobby)
 [![CircleCI](https://circleci.com/gh/chaitanyapotti/ElectusProtocol/tree/master.svg?style=shield)](https://circleci.com/gh/chaitanyapotti/ElectusProtocol/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/chaitanyapotti/ElectusProtocol.svg)](https://greenkeeper.io/)
