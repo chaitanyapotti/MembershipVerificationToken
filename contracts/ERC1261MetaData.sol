@@ -10,7 +10,8 @@ contract ERC1261MetaData is ElectusProtocol, IERC1261Metadata {
     bytes32 internal orgSymbol;
     
     constructor(bytes32 _orgName, bytes32 _orgSymbol) public {
-        _supportedInterfaces[0x93254542] = true;
+        _registerInterface(0x93254542);
+        //_supportedInterfaces[0x93254542] = true;
         orgName = _orgName;
         orgSymbol = _orgSymbol;
     }
