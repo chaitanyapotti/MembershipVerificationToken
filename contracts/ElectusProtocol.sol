@@ -118,7 +118,7 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         return index;
     }
 
-    function _assign(address _to, uint[] attributeIndexes) private {
+    function _assign(address _to, uint[] attributeIndexes) internal {
         require(_to != address(0), "Can't assign to zero address");        
         MemberData memory member;
         member.hasToken = true;
@@ -131,7 +131,7 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         emit Assigned(_to);
     }
 
-    function _revoke(address _from) private {
+    function _revoke(address _from) internal {
         require(_from != address(0), "Can't revoke from zero address");
         MemberData storage member = currentHolders[_from];
         member.hasToken = false;
