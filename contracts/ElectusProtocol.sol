@@ -11,16 +11,24 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         bytes32[] data;
     }
 
+    struct PendingRequest {
+        bool isPending;
+        uint[] attributes;
+    }
+
     mapping(bytes32 => bytes32[]) public attributeValueCollection;
 
     bytes32[] public attributeNames;
 
     mapping(address => MemberData) public currentHolders;
+    mapping(address => PendingRequest) public pendingRequests;
 
     address[] public allHolders;
 
     uint public currentMemberCount;
 
+    event ApprovedMembership(address indexed to);
+    event RequestedMembership(address indexed to);
     event Assigned(address indexed to);
     event Revoked(address indexed to);
     event ModifiedAttributes(address indexed to);
@@ -45,18 +53,36 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         _;
     }
 
-    function requestMembership(uint[] attributeIndexes) external payable {
+    function requestMembership(uint[] _attributeIndexes) external payable {
         require(!isCurrentMember(msg.sender), "Already a member");
         //Do some checks before assigning membership
-        _assign(msg.sender, attributeIndexes);
+        PendingRequest storage request = pendingRequests[msg.sender];
+        request.isPending = true;
+        request.attributes = _attributeIndexes;
+        emit RequestedMembership(msg.sender);
     }
 
     function forfeitMembership() external isCurrentHolder payable {
         _revoke(msg.sender);
     }
 
-    function assignTo(address _to, uint[] attributeIndexes) external onlyOwner {
-        _assign(_to, attributeIndexes);
+    function approveRequest(address _user) external onlyOwner {
+        PendingRequest storage request = pendingRequests[_user];
+        require(request.isPending, "Hasn't sent ether yet");
+        _assign(_user, request.attributes);
+        emit ApprovedMembership(_user);
+    }
+
+    function discardRequest(address _user) external onlyOwner {
+        PendingRequest storage request = pendingRequests[_user];
+        require(request.isPending, "Hasn't sent ether yet");
+        //what's preventing us from collecting ether from users and discarding all requests
+        request.isPending = false;
+        delete request.attributes;
+    }
+
+    function assignTo(address _to, uint[] _attributeIndexes) external onlyOwner {
+        _assign(_to, _attributeIndexes);
     }
 
     function revokeFrom(address _from) external onlyOwner {
@@ -93,8 +119,8 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         return currentHolders[_to].data;
     }
 
-    function getAttributeByName(address _to, bytes32 attribute) external view returns (bytes32) {
-        uint index = getIndexOfAttribute(attribute);
+    function getAttributeByName(address _to, bytes32 _attribute) external view returns (bytes32) {
+        uint index = getIndexOfAttribute(_attribute);
         require(currentHolders[_to].data.length > index, "data doesn't exist for the user");
         return currentHolders[_to].data[index];
     }
@@ -104,11 +130,11 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         return currentHolders[_to].hasToken;
     }
     
-    function getIndexOfAttribute(bytes32 attribute) internal view returns (uint) {
+    function getIndexOfAttribute(bytes32 _attribute) internal view returns (uint) {
         uint index = 0;
         bool isAttributeFound = false;
         for (uint i = 0; i < attributeNames.length; i++) {
-            if (attributeNames[i] == attribute) {
+            if (attributeNames[i] == _attribute) {
                 index = i;
                 isAttributeFound = true;
                 break;
@@ -118,13 +144,13 @@ contract ElectusProtocol is IERC1261, Ownable, ERC165 {
         return index;
     }
 
-    function _assign(address _to, uint[] attributeIndexes) internal {
+    function _assign(address _to, uint[] _attributeIndexes) internal {
         require(_to != address(0), "Can't assign to zero address");        
         MemberData memory member;
         member.hasToken = true;
         currentHolders[_to] = member;
-        for (uint index = 0; index < attributeIndexes.length; index++) {
-            currentHolders[_to].data.push(attributeValueCollection[attributeNames[index]][attributeIndexes[index]]);
+        for (uint index = 0; index < _attributeIndexes.length; index++) {
+            currentHolders[_to].data.push(attributeValueCollection[attributeNames[index]][_attributeIndexes[index]]);
         }
         allHolders.push(_to);
         currentMemberCount += 1;

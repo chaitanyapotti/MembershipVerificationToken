@@ -12,6 +12,12 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @dev This emits when a membership is revoked.
     event Revoked(address indexed to);
 
+    /// @dev This emits when a membership request is accepted
+    event ApprovedMembership(address indexed to);
+
+    /// @dev This emits when a membership is requested by an user
+    event RequestedMembership(address indexed to);
+
     /// @dev This emits when data of a member is modified. 
     ///  Doesn't emit when a new membership is created and data is assigned.
     event ModifiedAttributes(address indexed to);
@@ -33,18 +39,36 @@ interface IERC1261 {/* is ERC173, ERC165 */
 
     /// @notice Requests membership from any address.
     /// @dev Throws if the `msg.sender` already has the token.
-    ///  The individual `msg.sender` can request for a membership and if some exisiting criteria are satisfied.
-    ///  The individual `msg.sender` receives the token.
-    ///  When the token is assigned, this function emits the Assigned event.
-    /// @param data the attribute data associated with the member.
+    ///  The individual `msg.sender` can request for a membership if some exisiting criteria are satisfied.
+    ///  When a membership is requested, this function emits the RequestedMembership event.
+    ///  dev can store the membership request and use `approveRequest` to assign memebership later
+    ///  dev can also oraclize the request to assign membership later
+    /// @param _attributeIndexes the attribute data associated with the member.
     ///  This is an array which contains indexes of attributes.
-    function requestMembership(uint[] data) external payable;
+    function requestMembership(uint[] _attributeIndexes) external payable;
 
     /// @notice User can forfeit his membership.
     /// @dev Throws if the `msg.sender` already doesn't have the token.
     ///  The individual `msg.sender` can revoke his/her membership.
     ///  When the token is revoked, this function emits the Revoked event.
     function forfeitMembership() external payable;
+
+    /// @notice Owner approves membership from any address.
+    /// @dev Throws if the `_user` doesn't have a pending request.
+    ///  Throws if the `msg.sender` is not an owner.
+    ///  Approves the pending request
+    ///  Make oraclize callback call this function
+    ///  When the token is assigned, this function emits the `ApprovedMembership` and `Assigned` events.
+    /// @param _user the user whose membership request will be approved.
+    function approveRequest(address _user) external;
+
+    /// @notice Owner discards membership from any address.
+    /// @dev Throws if the `_user` doesn't have a pending request.
+    ///  Throws if the `msg.sender` is not an owner.
+    ///  Discards the pending request
+    ///  Make oraclize callback call this function if criteria are not satisfied
+    /// @param _user the user whose membership request will be discarded.
+    function discardRequest(address _user) external;
 
     /// @notice Assigns membership of an MVT from owner address to another address.
     /// @dev Throws if the member already has the token.

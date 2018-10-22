@@ -56,14 +56,42 @@ contract("ElectusProtocol", function(accounts) {
     assert.equal(web3.utils.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("request memebership", async () => {
-    await electusProtocol.requestMembership([0], {
+    const requestedMembership = await electusProtocol.requestMembership([0], {
       from: accounts[2]
     });
-    const data = await electusProtocol.getAllMembers();
+    const data = await electusProtocol.isCurrentMember(accounts[2]);
+    const isMembershipPending = await electusProtocol.pendingRequests(accounts[2]);
+    assert.equal(isMembershipPending, true);
+    assert.equal(data, false);
+    truffleAssert.eventEmitted(requestedMembership, "RequestedMembership");
+  });
+  it("request and approve memebership", async () => {
+    const requestedMembership = await electusProtocol.requestMembership([0], {
+      from: accounts[2]
+    });
+    const approvedMembership = await electusProtocol.approveRequest(accounts[2], {
+      from: accounts[0]
+    });
+    const data = await electusProtocol.isCurrentMember(accounts[2]);
+    assert.equal(data, true);
     const attr = await electusProtocol.getAttributes(accounts[2]);
-    assert.equal(data[1], accounts[2]);
     // eslint-disable-next-line no-control-regex
     assert.equal(web3.utils.toAscii(attr[0]).replace(/\u0000/g, ""), "black", 32);
+    truffleAssert.eventEmitted(requestedMembership, "RequestedMembership");
+    truffleAssert.eventEmitted(approvedMembership, "ApprovedMembership");
+  });
+  it("discard memebership request", async () => {
+    const requestedMembership = await electusProtocol.requestMembership([0], {
+      from: accounts[2]
+    });
+    await electusProtocol.discardRequest(accounts[2], {
+      from: accounts[0]
+    });
+    const isMembershipPending = await electusProtocol.pendingRequests(accounts[2]);
+    const data = await electusProtocol.isCurrentMember(accounts[2]);
+    assert.equal(isMembershipPending, false);
+    assert.equal(data, false);
+    truffleAssert.eventEmitted(requestedMembership, "RequestedMembership");
   });
   it("self revoke memebership", async () => {
     const revoke = await electusProtocol.forfeitMembership({
