@@ -1,8 +1,8 @@
 {
-  "name": "electusprotocol",
-  "version": "1.5.1",
-  "description": "Standard Implementation and interface for Electus Protocol",
-  "main": "truffle.js",
+  "name": "membershipverificationtoken",
+  "version": "2.0.0",
+  "description": "Standard Implementation and interface for Membership Verification Token",
+  "main": "truffle-config.js",
   "directories": {
     "test": "test"
   },
@@ -30,11 +30,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chaitanyapotti/ElectusProtocol.git"
+    "url": "git+https://github.com/chaitanyapotti/MembershipVerificationToken.git"
   },
   "author": "Chaitanya Potti",
   "bugs": {
-    "url": "https://github.com/chaitanyapotti/ElectusProtocol/issues"
+    "url": "https://github.com/chaitanyapotti/MembershipVerificationToken/issues"
   },
   "keywords": [
     "solidity",
@@ -43,18 +43,22 @@
     "contracts",
     "protocol",
     "electus",
-    "eip-1261"
+    "eip-1261",
+    "Membership Verification Token",
+    "Organizations",
+    "Decentralized",
+    "Governance"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/chaitanyapotti/ElectusProtocol#readme",
+  "homepage": "https://github.com/chaitanyapotti/MembershipVerificationToken#readme",
   "dependencies": {
     "ganache-cli": "^6.1.8",
     "openzeppelin-solidity": "^2.0.0",
-    "truffle-assertions": "^0.6.2"
+    "truffle-assertions": "^0.6.3"
   },
   "devDependencies": {
     "solidity-coverage": "^0.5.11",
-    "eslint": "^5.7.0",
+    "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -63,9 +67,9 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "lint-staged": "^8.0.3",
+    "lint-staged": "^8.0.4",
     "prettier": "^1.14.3",
     "solhint": "^1.4.0",
-    "husky": "^1.1.2"
+    "husky": "^1.1.3"
   }
 }

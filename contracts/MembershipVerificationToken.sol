@@ -2,10 +2,10 @@ pragma solidity ^0.4.25;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/introspection/ERC165.sol";
-import "./Protocol/IElectusProtocol.sol";
+import "./Protocol/IERC1261.sol";
 
 
-contract ElectusProtocol is IERC1261, Ownable, ERC165 {
+contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
     struct MemberData {
         bool hasToken;
         bytes32[] data;

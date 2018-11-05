@@ -2,6 +2,7 @@
 
 <!-- <img align="center" src="./img/colonyNetwork_color.svg" /> -->
 
+[![npm version](https://badge.fury.io/js/membershipverificationtoken.svg)](https://badge.fury.io/js/membershipverificationtoken)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/MembershipVerificationToken/Lobby)
 [![CircleCI](https://circleci.com/gh/chaitanyapotti/MembershipVerificationToken/tree/master.svg?style=shield)](https://circleci.com/gh/chaitanyapotti/MembershipVerificationToken/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/chaitanyapotti/MembershipVerificationToken.svg)](https://greenkeeper.io/)
@@ -43,9 +44,9 @@ npm install --save MembershipVerificationToken
 After that, you'll get all the library's contracts in the `node_modules/MembershipVerificationToken/contracts` folder. You can use the contracts in the library like so:
 
 ```solidity
-import 'MembershipVerificationToken/contracts/Protocol/IElectusProtocol.sol';
+import 'MembershipVerificationToken/contracts/Protocol/IERC1261.sol';
 
-contract MyContract is IElectusProtocol {
+contract MyContract is IRC1261 {
   ...
 }
 ```

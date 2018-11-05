@@ -1,10 +1,10 @@
 pragma solidity ^0.4.25;
 
-import "./ElectusProtocol.sol";
-import "./Protocol/IElectusProtocol.sol";
+import "./MembershipVerificationToken.sol";
+import "./Protocol/IERC1261.sol";
 
 
-contract ERC1261MetaData is ElectusProtocol, IERC1261Metadata {
+contract ERC1261MetaData is MembershipVerificationToken, IERC1261Metadata {
 
     bytes32 internal orgName;
     bytes32 internal orgSymbol;
