@@ -1,4 +1,4 @@
-var ElectusProtocol = artifacts.require("./ElectusProtocol.sol");
+var ElectusProtocol = artifacts.require("./MembershipVerificationToken.sol");
 const truffleAssert = require("truffle-assertions");
 
 contract("ElectusProtocol", function(accounts) {
