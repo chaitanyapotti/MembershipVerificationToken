@@ -1,4 +1,4 @@
-# ElectusProtocol
+# Membership Verification Token
 
 <!-- <img align="center" src="./img/colonyNetwork_color.svg" /> -->
 
@@ -11,15 +11,15 @@
 ## Install
 
 ```
-git clone https://github.com/chaitanyapotti/ElectusProtocol.git
-cd ElectusProtocol
+git clone https://github.com/chaitanyapotti/MembershipVerificationToken.git
+cd MembershipVerificationToken
 npm install
 ```
 
 ## Contracts
 
 The protocol level contracts use OpenZeppelin extensively for referencing standard EIPs.
-Electus Protocol utilizes OpenZeppelin's implementations for EIP-165 and EIP-173.
+Membership Verification Token utilizes OpenZeppelin's implementations for EIP-165 and EIP-173.
 Please refer to OpenZeppelin's github page [here](https://github.com/OpenZeppelin/openzeppelin-solidity)
 
 ## truffle
@@ -32,7 +32,7 @@ mkdir myproject && cd myproject
 truffle init
 ```
 
-## Installing Electus Protocol
+## Installing Membership Verification Token
 
 After installing either Framework, to install the Electus Protocol library, run the following in your Solidity project root directory:
 
