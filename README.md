@@ -2,11 +2,10 @@
 
 <!-- <img align="center" src="./img/colonyNetwork_color.svg" /> -->
 
-[![npm version](https://badge.fury.io/js/electusprotocol.svg)](https://badge.fury.io/js/electusprotocol)
-[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/ElectusProtocol/Lobby)
-[![CircleCI](https://circleci.com/gh/chaitanyapotti/ElectusProtocol/tree/master.svg?style=shield)](https://circleci.com/gh/chaitanyapotti/ElectusProtocol/tree/master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/chaitanyapotti/ElectusProtocol.svg)](https://greenkeeper.io/)
-[![codecov](https://codecov.io/gh/chaitanyapotti/ElectusProtocol/branch/master/graph/badge.svg)](https://codecov.io/gh/chaitanyapotti/ElectusProtocol)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/MembershipVerificationToken/Lobby)
+[![CircleCI](https://circleci.com/gh/chaitanyapotti/MembershipVerificationToken/tree/master.svg?style=shield)](https://circleci.com/gh/chaitanyapotti/MembershipVerificationToken/tree/master)
+[![Greenkeeper badge](https://badges.greenkeeper.io/chaitanyapotti/MembershipVerificationToken.svg)](https://greenkeeper.io/)
+[![codecov](https://codecov.io/gh/chaitanyapotti/MembershipVerificationToken/branch/master/graph/badge.svg)](https://codecov.io/gh/chaitanyapotti/MembershipVerificationToken)
 
 ## Install
 
@@ -34,17 +33,17 @@ truffle init
 
 ## Installing Membership Verification Token
 
-After installing either Framework, to install the Electus Protocol library, run the following in your Solidity project root directory:
+After installing either Framework, to install the Membership Verification Token library, run the following in your Solidity project root directory:
 
 ```sh
 npm init -y
-npm install --save electusprotocol
+npm install --save MembershipVerificationToken
 ```
 
-After that, you'll get all the library's contracts in the `node_modules/electusprotocol/contracts` folder. You can use the contracts in the library like so:
+After that, you'll get all the library's contracts in the `node_modules/MembershipVerificationToken/contracts` folder. You can use the contracts in the library like so:
 
 ```solidity
-import 'electusprotocol/contracts/Protocol/IElectusProtocol.sol';
+import 'MembershipVerificationToken/contracts/Protocol/IElectusProtocol.sol';
 
 contract MyContract is IElectusProtocol {
   ...
@@ -82,7 +81,7 @@ node .\node_modules\eslint\bin\eslint.js . --fix
 
 ## Testing
 
-Unit test are critical to the Electus Protocol framework. They help ensure code quality and mitigate against security vulnerabilities. The directory structure within the `/test` directory corresponds to the `/contracts` directory. OpenZeppelin uses Mocha’s JavaScript testing framework and Chai’s assertion library. To learn more about how to tests are structured, please reference Electus Protocol's Testing Guide.
+Unit test are critical to the Membership Verification Token framework. They help ensure code quality and mitigate against security vulnerabilities. The directory structure within the `/test` directory corresponds to the `/contracts` directory. OpenZeppelin uses Mocha’s JavaScript testing framework and Chai’s assertion library. To learn more about how to tests are structured, please reference Membership Verification Token's Testing Guide.
 
 To run all tests:
 
@@ -95,9 +94,9 @@ truffle test
 
 ## Security
 
-Electus Protocol is meant to provide secure, tested and community-audited code, but please use common sense when doing anything that deals with real money! We take no responsibility for your implementation decisions and any security problem you might experience.
+Membership Verification Token is meant to provide secure, tested and community-audited code, but please use common sense when doing anything that deals with real money! We take no responsibility for your implementation decisions and any security problem you might experience.
 
-The core development principles and strategies that Electus Protocol is based on include: security in depth, simple and modular code, clarity-driven naming conventions, comprehensive unit testing, pre-and-post-condition sanity checks, code consistency, and regular audits.
+The core development principles and strategies that Membership Verification Token is based on include: security in depth, simple and modular code, clarity-driven naming conventions, comprehensive unit testing, pre-and-post-condition sanity checks, code consistency, and regular audits.
 
 If you find a security issue, please email [chaitanya@electus.network](mailto:chaitanya@electus.network).
 
