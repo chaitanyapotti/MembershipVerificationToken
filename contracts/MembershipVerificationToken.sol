@@ -29,9 +29,9 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
 
     event ApprovedMembership(address indexed to);
     event RequestedMembership(address indexed to);
-    event Assigned(address indexed to);
+    event Assigned(address indexed to, uint[] attributeIndexes);
     event Revoked(address indexed to);
-    event ModifiedAttributes(address indexed to);
+    event ModifiedAttributes(address indexed to, bytes32 attributeName, uint attributeIndex);
 
     constructor () public {
         _registerInterface(0x912f7bb2); //IERC1261
@@ -99,7 +99,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         require(currentHolders[_to].data.length > attributeIndex, "data doesn't exist for the user");
         currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]]
         [_modifiedValueIndex];
-        emit ModifiedAttributes(_to);
+        emit ModifiedAttributes(_to, _attributeName, _modifiedValueIndex);
     }
 
     function getAllMembers() external view returns (address[]) {
@@ -154,7 +154,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         }
         allHolders.push(_to);
         currentMemberCount += 1;
-        emit Assigned(_to);
+        emit Assigned(_to, _attributeIndexes);
     }
 
     function _revoke(address _from) internal {
