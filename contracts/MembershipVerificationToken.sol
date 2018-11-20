@@ -55,6 +55,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
 
     function requestMembership(uint[] _attributeIndexes) external payable {
         require(!isCurrentMember(msg.sender), "Already a member");
+        require(_attributeIndexes.length == attributeNames.length, "Need to input all attributes");
         //Do some checks before assigning membership
         PendingRequest storage request = pendingRequests[msg.sender];
         request.isPending = true;
@@ -119,7 +120,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         return currentHolders[_to].data;
     }
 
-    function getAttributeCollection(bytes32 _name) external view returns (bytes32[]) {
+    function getAttributeExhaustiveCollection(bytes32 _name) external view returns (bytes32[]) {
         return attributeValueCollection[_name];
     }
 
@@ -150,6 +151,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
 
     function _assign(address _to, uint[] _attributeIndexes) internal {
         require(_to != address(0), "Can't assign to zero address");        
+        require(_attributeIndexes.length == attributeNames.length, "Need to input all attributes");
         MemberData memory member;
         member.hasToken = true;
         currentHolders[_to] = member;
