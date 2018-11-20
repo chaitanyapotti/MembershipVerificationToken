@@ -27,11 +27,11 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
 
     uint public currentMemberCount;
 
-    event ApprovedMembership(address indexed to);
-    event RequestedMembership(address indexed to);
-    event Assigned(address indexed to, uint[] attributeIndexes);
-    event Revoked(address indexed to);
-    event ModifiedAttributes(address indexed to, bytes32 attributeName, uint attributeIndex);
+    event ApprovedMembership(address indexed _to);
+    event RequestedMembership(address indexed _to);
+    event Assigned(address indexed _to, uint[] attributeIndexes);
+    event Revoked(address indexed _to);
+    event ModifiedAttributes(address indexed _to, bytes32 attributeName, uint attributeIndex);
 
     constructor () public {
         _registerInterface(0x912f7bb2); //IERC1261
@@ -117,6 +117,10 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
     function getAttributes(address _to) external view returns (bytes32[]) {
         require(_to != address(0));
         return currentHolders[_to].data;
+    }
+
+    function getAttributeCollection(bytes32 _name) external view returns (bytes32[]) {
+        return attributeValueCollection[_name];
     }
 
     function getAttributeByName(address _to, bytes32 _attribute) external view returns (bytes32) {
