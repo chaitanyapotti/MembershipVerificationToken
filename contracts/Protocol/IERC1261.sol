@@ -99,7 +99,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
 
      /// @notice Gets the value collection of an attribute.
     /// @dev Returns the values of attributes as a bytes32 array.
-    /// @param _to An address for whom to query the membership.
+    /// @param _name Name of the attribute whose values are to be fetched
     /// @return The values of attributes.
     function getAttributeCollection(bytes32 _name) external view returns (bytes32[]);
 
