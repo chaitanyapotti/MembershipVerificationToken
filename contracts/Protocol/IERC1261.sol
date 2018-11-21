@@ -16,7 +16,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
     event Forfeited(address indexed _to);
 
     /// @dev This emits when a membership request is accepted
-    event ApprovedMembership(address indexed _to);
+    event ApprovedMembership(address indexed _to, uint[] attributeIndexes);
 
     /// @dev This emits when a membership is requested by an user
     event RequestedMembership(address indexed _to);

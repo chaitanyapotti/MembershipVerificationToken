@@ -27,7 +27,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
 
     uint public currentMemberCount;
 
-    event ApprovedMembership(address indexed _to);
+    event ApprovedMembership(address indexed _to, uint[] attributeIndexes);
     event RequestedMembership(address indexed _to);
     event Assigned(address indexed _to, uint[] attributeIndexes);
     event Revoked(address indexed _to);
@@ -71,7 +71,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         PendingRequest storage request = pendingRequests[_user];
         require(request.isPending, "Hasn't sent ether yet");
         _assign(_user, request.attributes);
-        emit ApprovedMembership(_user);
+        emit ApprovedMembership(_user, request.attributes);
     }
 
     function discardRequest(address _user) external onlyOwner {
