@@ -12,6 +12,9 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @dev This emits when a membership is revoked.
     event Revoked(address indexed _to);
 
+    /// @dev This emits when a user forfeits his membership
+    event Forfeited(address indexed _to);
+
     /// @dev This emits when a membership request is accepted
     event ApprovedMembership(address indexed _to);
 
@@ -20,7 +23,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
 
     /// @dev This emits when data of a member is modified. 
     ///  Doesn't emit when a new membership is created and data is assigned.
-    event ModifiedAttributes(address indexed _to, bytes32 attributeName, uint attributeIndex);
+    event ModifiedAttributes(address indexed _to, uint attributeIndex, uint attributeValueIndex);
 
     /// @notice Adds a new attribute (key, value) pair to the set of pre-existing attributes.
     /// @dev Adds a new attribute at the end of the array of attributes and maps it to `values`.
@@ -33,9 +36,9 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @dev Use appropriate checks for whether a user/admin can modify the data.
     ///  Best practice is to use onlyOwner modifier from ERC173.
     /// @param _to The address whose attribute is being modified.
-    /// @param _attributeName The attribute name which is being modified.
+    /// @param _attributeIndex The index of attribute which is being modified.
     /// @param _modifiedValueIndex The index of the new value which is being assigned to the user attribute.
-    function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external;
+    function modifyAttributeByIndex(address _to, uint _attributeIndex, uint _modifiedValueIndex) external;
 
     /// @notice Requests membership from any address.
     /// @dev Throws if the `msg.sender` already has the token.
@@ -77,9 +80,9 @@ interface IERC1261 {/* is ERC173, ERC165 */
     ///  The entity assigns the membership to each individual.
     ///  When the token is assigned, this function emits the Assigned event.
     /// @param _to The address to which the token is assigned.
-    /// @param data The attribute data associated with the member.
+    /// @param _attributeIndexes The attribute data associated with the member.
     ///  This is an array which contains indexes of attributes.
-    function assignTo(address _to, uint[] data) external;
+    function assignTo(address _to, uint[] _attributeIndexes) external;
 
     /// @notice Only Owner can revoke the membership.
     /// @dev This removes the membership of the user.
@@ -139,7 +142,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @param _to The address whose attribute is requested.
     /// @param attribute The attribute name which is required.
     /// @return The attribute value at the specified name.
-    function getAttributeByName(address _to, bytes32 attribute) external view returns (bytes32);    
+    function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (bytes32);    
 }
 
 
