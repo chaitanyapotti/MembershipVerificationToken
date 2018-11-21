@@ -140,7 +140,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
     ///  Throws if the attribute is not present in the predefined attributes.
     ///  Returns the attributeValue for the specified `attribute`.
     /// @param _to The address whose attribute is requested.
-    /// @param attribute The attribute name which is required.
+    /// @param _attributeIndex The attribute Index which is required.
     /// @return The attribute value at the specified name.
     function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (bytes32);    
 }
