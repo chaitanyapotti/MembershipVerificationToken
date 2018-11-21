@@ -31,13 +31,12 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
     event RequestedMembership(address indexed _to);
     event Assigned(address indexed _to, uint[] attributeIndexes);
     event Revoked(address indexed _to);
-    event ModifiedAttributes(address indexed _to, bytes32 attributeName, uint attributeIndex);
+    event Forfeited(address indexed _to);
+    event ModifiedAttributes(address indexed _to, uint attributeIndex, uint attributeValueIndex);
 
     constructor () public {
         _registerInterface(0x912f7bb2); //IERC1261
         _registerInterface(0x83adfb2d); //Ownable
-        //_supportedInterfaces[0x912f7bb2] = true; //IERC1261
-        //_supportedInterfaces[0x83adfb2d] = true; //Ownable
         // attributeNames.push("hair");
         // attributeNames.push("skin");
         // attributeNames.push("height");
@@ -65,6 +64,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
 
     function forfeitMembership() external isCurrentHolder payable {
         _revoke(msg.sender);
+        emit Forfeited(msg.sender);
     }
 
     function approveRequest(address _user) external onlyOwner {
@@ -84,10 +84,12 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
 
     function assignTo(address _to, uint[] _attributeIndexes) external onlyOwner {
         _assign(_to, _attributeIndexes);
+        emit Assigned(_to, _attributeIndexes);
     }
 
     function revokeFrom(address _from) external onlyOwner {
         _revoke(_from);
+        emit Revoked(_from);
     }
 
     function addAttributeSet(bytes32 _name, bytes32[] values) external {
@@ -95,12 +97,19 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         attributeValueCollection[_name] = values;
     }
 
-    function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external onlyOwner {
-        uint attributeIndex = getIndexOfAttribute(_attributeName);
-        require(currentHolders[_to].data.length > attributeIndex, "data doesn't exist for the user");
-        currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]]
+    // function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external onlyOwner {
+    //     uint attributeIndex = getIndexOfAttribute(_attributeName);
+    //     require(currentHolders[_to].data.length > attributeIndex, "data doesn't exist for the user");
+    //     currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]]
+    //     [_modifiedValueIndex];
+    //     emit ModifiedAttributes(_to, _attributeName, _modifiedValueIndex);
+    // }
+    function modifyAttributeByIndex(address _to, uint _attributeIndex, uint _modifiedValueIndex) external onlyOwner {
+        // uint attributeIndex = getIndexOfAttribute(_attributeName);
+        require(currentHolders[_to].data.length > _attributeIndex, "data doesn't exist for the user");
+        currentHolders[_to].data[_attributeIndex] = attributeValueCollection[attributeNames[_attributeIndex]]
         [_modifiedValueIndex];
-        emit ModifiedAttributes(_to, _attributeName, _modifiedValueIndex);
+        emit ModifiedAttributes(_to, _attributeIndex, _modifiedValueIndex);
     }
 
     function getAllMembers() external view returns (address[]) {
@@ -124,10 +133,14 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         return attributeValueCollection[_name];
     }
 
-    function getAttributeByName(address _to, bytes32 _attribute) external view returns (bytes32) {
-        uint index = getIndexOfAttribute(_attribute);
-        require(currentHolders[_to].data.length > index, "data doesn't exist for the user");
-        return currentHolders[_to].data[index];
+    // function getAttributeByName(address _to, bytes32 _attribute) external view returns (bytes32) {
+    //     uint index = getIndexOfAttribute(_attribute);
+    //     require(currentHolders[_to].data.length > index, "data doesn't exist for the user");
+    //     return currentHolders[_to].data[index];
+    // }
+    function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (bytes32) {
+        require(currentHolders[_to].data.length > _attributeIndex, "data doesn't exist for the user");
+        return currentHolders[_to].data[_attributeIndex];
     }
 
     function isCurrentMember(address _to) public view returns (bool) {
@@ -135,20 +148,19 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         return currentHolders[_to].hasToken;
     }
     
-    function getIndexOfAttribute(bytes32 _attribute) internal view returns (uint) {
-        uint index = 0;
-        bool isAttributeFound = false;
-        for (uint i = 0; i < attributeNames.length; i++) {
-            if (attributeNames[i] == _attribute) {
-                index = i;
-                isAttributeFound = true;
-                break;
-            }
-        }
-        require(isAttributeFound, "Invalid Attribute Name");
-        return index;
-    }
-
+    // function getIndexOfAttribute(bytes32 _attribute) internal view returns (uint) {
+    //     uint index = 0;
+    //     bool isAttributeFound = false;
+    //     for (uint i = 0; i < attributeNames.length; i++) {
+    //         if (attributeNames[i] == _attribute) {
+    //             index = i;
+    //             isAttributeFound = true;
+    //             break;
+    //         }
+    //     }
+    //     require(isAttributeFound, "Invalid Attribute Name");
+    //     return index;
+    // }
     function _assign(address _to, uint[] _attributeIndexes) internal {
         require(_to != address(0), "Can't assign to zero address");        
         require(_attributeIndexes.length == attributeNames.length, "Need to input all attributes");
@@ -160,7 +172,6 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         }
         allHolders.push(_to);
         currentMemberCount += 1;
-        emit Assigned(_to, _attributeIndexes);
     }
 
     function _revoke(address _from) internal {
@@ -168,6 +179,5 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         MemberData storage member = currentHolders[_from];
         member.hasToken = false;
         currentMemberCount -= 1;
-        emit Revoked(_from);
     }
 }
