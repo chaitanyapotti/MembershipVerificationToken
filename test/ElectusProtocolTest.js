@@ -38,7 +38,7 @@ contract("ElectusProtocol", function(accounts) {
     assert.equal(web3.utils.toAscii(data[0]).replace(/\u0000/g, ""), "black", 32);
   });
   it("gets attribute of a member by name", async () => {
-    const data = await electusProtocol.getAttributeByName(accounts[1], web3.utils.fromAscii("hair"));
+    const data = await electusProtocol.getAttributeByIndex(accounts[1], 0);
     // eslint-disable-next-line no-control-regex
     assert.equal(web3.utils.toAscii(data).replace(/\u0000/g, ""), "black", 32);
   });
@@ -49,7 +49,7 @@ contract("ElectusProtocol", function(accounts) {
     assert.equal(web3.utils.toAscii(data[2]).replace(/\u0000/g, ""), "height", 32);
   });
   it("modifies attribute by name", async () => {
-    const result = await electusProtocol.modifyAttributeByName(accounts[1], web3.utils.fromAscii("hair"), 0);
+    const result = await electusProtocol.modifyAttributeByIndex(accounts[1], 0, 0);
     const data = await electusProtocol.getAttributes(accounts[1]);
     truffleAssert.eventEmitted(result, "ModifiedAttributes");
     // eslint-disable-next-line no-control-regex
@@ -97,7 +97,7 @@ contract("ElectusProtocol", function(accounts) {
     const revoke = await electusProtocol.forfeitMembership({
       from: accounts[1]
     });
-    truffleAssert.eventEmitted(revoke, "Revoked");
+    truffleAssert.eventEmitted(revoke, "Forfeited");
     const data = await electusProtocol.isCurrentMember(accounts[1]);
     assert.equal(data, false);
   });
