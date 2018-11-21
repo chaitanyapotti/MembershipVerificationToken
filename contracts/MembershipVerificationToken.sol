@@ -37,14 +37,6 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
     constructor () public {
         _registerInterface(0x912f7bb2); //IERC1261
         _registerInterface(0x83adfb2d); //Ownable
-        // attributeNames.push("hair");
-        // attributeNames.push("skin");
-        // attributeNames.push("height");
-        // attributeValueCollection["hair"].push("black");
-        // attributeValueCollection["hair"].push("white");
-        // attributeValueCollection["skin"].push("black");
-        // attributeValueCollection["skin"].push("white");
-        // attributeValueCollection["height"].push("1.5");
     }
 
     modifier isCurrentHolder {
@@ -77,7 +69,6 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
     function discardRequest(address _user) external onlyOwner {
         PendingRequest storage request = pendingRequests[_user];
         require(request.isPending, "Hasn't sent ether yet");
-        //what's preventing us from collecting ether from users and discarding all requests
         request.isPending = false;
         delete request.attributes;
     }
@@ -97,13 +88,6 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         attributeValueCollection[_name] = values;
     }
 
-    // function modifyAttributeByName(address _to, bytes32 _attributeName, uint _modifiedValueIndex) external onlyOwner {
-    //     uint attributeIndex = getIndexOfAttribute(_attributeName);
-    //     require(currentHolders[_to].data.length > attributeIndex, "data doesn't exist for the user");
-    //     currentHolders[_to].data[attributeIndex] = attributeValueCollection[attributeNames[attributeIndex]]
-    //     [_modifiedValueIndex];
-    //     emit ModifiedAttributes(_to, _attributeName, _modifiedValueIndex);
-    // }
     function modifyAttributeByIndex(address _to, uint _attributeIndex, uint _modifiedValueIndex) external onlyOwner {
         // uint attributeIndex = getIndexOfAttribute(_attributeName);
         require(currentHolders[_to].data.length > _attributeIndex, "data doesn't exist for the user");
@@ -133,11 +117,6 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         return attributeValueCollection[_name];
     }
 
-    // function getAttributeByName(address _to, bytes32 _attribute) external view returns (bytes32) {
-    //     uint index = getIndexOfAttribute(_attribute);
-    //     require(currentHolders[_to].data.length > index, "data doesn't exist for the user");
-    //     return currentHolders[_to].data[index];
-    // }
     function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (bytes32) {
         require(currentHolders[_to].data.length > _attributeIndex, "data doesn't exist for the user");
         return currentHolders[_to].data[_attributeIndex];
@@ -148,19 +127,6 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         return currentHolders[_to].hasToken;
     }
     
-    // function getIndexOfAttribute(bytes32 _attribute) internal view returns (uint) {
-    //     uint index = 0;
-    //     bool isAttributeFound = false;
-    //     for (uint i = 0; i < attributeNames.length; i++) {
-    //         if (attributeNames[i] == _attribute) {
-    //             index = i;
-    //             isAttributeFound = true;
-    //             break;
-    //         }
-    //     }
-    //     require(isAttributeFound, "Invalid Attribute Name");
-    //     return index;
-    // }
     function _assign(address _to, uint[] _attributeIndexes) internal {
         require(_to != address(0), "Can't assign to zero address");        
         require(_attributeIndexes.length == attributeNames.length, "Need to input all attributes");
