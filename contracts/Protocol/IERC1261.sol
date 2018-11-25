@@ -23,7 +23,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
 
     /// @dev This emits when data of a member is modified. 
     ///  Doesn't emit when a new membership is created and data is assigned.
-    event ModifiedAttributes(address indexed _to, uint attributeIndex, uint attributeValueIndex);
+    event ModifiedAttributes(address indexed _to, uint attributeIndex, uint prevValueIndex, bytes32 prevValue, uint modifiedValueIndex, bytes32 modifiedValue);
 
     /// @notice Adds a new attribute (key, value) pair to the set of pre-existing attributes.
     /// @dev Adds a new attribute at the end of the array of attributes and maps it to `values`.
@@ -104,7 +104,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @dev Returns the values of attributes as a bytes32 array.
     /// @param _name Name of the attribute whose values are to be fetched
     /// @return The values of attributes.
-    function getAttributeExhaustiveCollection(bytes32 _name) external view returns (bytes32[]);
+    function getAttributeExhaustiveCollection(uint _index) external view returns (bytes32[]);
 
     /// @notice Returns the list of all past and present members.
     /// @dev Use this function along with isCurrentMember to find wasMemberOf() in Js.
@@ -133,7 +133,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
     ///  Use web3.toAscii(data[0]).replace(/\u0000/g, "") to convert to string in JS.
     /// @param _to The address whose current attributes are to be returned.
     /// @return The attributes associated with `_to` address.
-    function getAttributes(address _to) external view returns (bytes32[]);
+    function getAttributes(address _to) external view returns (uint[]);
 
     /// @notice Returns the `attribute` stored against `_to` address.
     /// @dev Finds the index of the `attribute`.
@@ -142,7 +142,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @param _to The address whose attribute is requested.
     /// @param _attributeIndex The attribute Index which is required.
     /// @return The attribute value at the specified name.
-    function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (bytes32);    
+    function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (uint);    
 }
 
 

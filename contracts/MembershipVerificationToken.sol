@@ -8,7 +8,7 @@ import "./Protocol/IERC1261.sol";
 contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
     struct MemberData {
         bool hasToken;
-        bytes32[] data;
+        uint[] data;
     }
 
     struct PendingRequest {
@@ -16,7 +16,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         uint[] attributes;
     }
 
-    mapping(bytes32 => bytes32[]) public attributeValueCollection;
+    mapping(uint => bytes32[]) public attributeValueCollection;
 
     bytes32[] public attributeNames;
 
@@ -32,7 +32,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
     event Assigned(address indexed _to, uint[] attributeIndexes);
     event Revoked(address indexed _to);
     event Forfeited(address indexed _to);
-    event ModifiedAttributes(address indexed _to, uint attributeIndex, uint attributeValueIndex);
+    event ModifiedAttributes(address indexed _to, uint attributeIndex, uint prevValueIndex, bytes32 prevValue, uint modifiedValueIndex, bytes32 modifiedValue);
 
     constructor () public {
         _registerInterface(0x912f7bb2); //IERC1261
@@ -85,15 +85,21 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
 
     function addAttributeSet(bytes32 _name, bytes32[] values) external {
         attributeNames.push(_name);
-        attributeValueCollection[_name] = values;
+        bytes32[] storage storedValues = attributeValueCollection[attributeNames.length - 1];
+        storedValues.push(0x756e646566696e65640000000000000000000000000000000000000000000000);
+        for (uint index = 0; index < values.length; index++) {
+            storedValues.push(values[index]);
+        }
     }
 
     function modifyAttributeByIndex(address _to, uint _attributeIndex, uint _modifiedValueIndex) external onlyOwner {
         // uint attributeIndex = getIndexOfAttribute(_attributeName);
         require(currentHolders[_to].data.length > _attributeIndex, "data doesn't exist for the user");
-        currentHolders[_to].data[_attributeIndex] = attributeValueCollection[attributeNames[_attributeIndex]]
-        [_modifiedValueIndex];
-        emit ModifiedAttributes(_to, _attributeIndex, _modifiedValueIndex);
+        uint prevIndex = currentHolders[_to].data[_attributeIndex];
+        bytes32 prevValue = attributeValueCollection[_attributeIndex][prevIndex];
+        currentHolders[_to].data[_attributeIndex] = _modifiedValueIndex;
+        bytes32 modifiedValue = attributeValueCollection[_attributeIndex][_modifiedValueIndex];
+        emit ModifiedAttributes(_to, _attributeIndex, prevIndex, prevValue, _modifiedValueIndex, modifiedValue);
     }
 
     function getAllMembers() external view returns (address[]) {
@@ -108,16 +114,16 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         return attributeNames;
     }
 
-    function getAttributes(address _to) external view returns (bytes32[]) {
+    function getAttributes(address _to) external view returns (uint[]) {
         require(_to != address(0));
         return currentHolders[_to].data;
     }
 
-    function getAttributeExhaustiveCollection(bytes32 _name) external view returns (bytes32[]) {
-        return attributeValueCollection[_name];
+    function getAttributeExhaustiveCollection(uint _index) external view returns (bytes32[]) {
+        return attributeValueCollection[_index];
     }
 
-    function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (bytes32) {
+    function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (uint) {
         require(currentHolders[_to].data.length > _attributeIndex, "data doesn't exist for the user");
         return currentHolders[_to].data[_attributeIndex];
     }
@@ -134,7 +140,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
         member.hasToken = true;
         currentHolders[_to] = member;
         for (uint index = 0; index < _attributeIndexes.length; index++) {
-            currentHolders[_to].data.push(attributeValueCollection[attributeNames[index]][_attributeIndexes[index]]);
+            currentHolders[_to].data.push(_attributeIndexes[index]);            
         }
         allHolders.push(_to);
         currentMemberCount += 1;
