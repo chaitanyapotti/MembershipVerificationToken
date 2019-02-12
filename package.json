@@ -53,7 +53,7 @@
   "homepage": "https://github.com/chaitanyapotti/MembershipVerificationToken#readme",
   "dependencies": {
     "ganache-cli": "^6.3.0",
-    "openzeppelin-solidity": "^2.1.2",
+    "openzeppelin-solidity": "2.0.0",
     "truffle-assertions": "^0.8.0"
   },
   "devDependencies": {
