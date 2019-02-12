@@ -54,7 +54,7 @@
   "dependencies": {
     "ganache-cli": "^6.2.3",
     "openzeppelin-solidity": "^2.0.0",
-    "truffle-assertions": "^0.6.3"
+    "truffle-assertions": "^0.7.0"
   },
   "devDependencies": {
     "solidity-coverage": "^0.5.11",
