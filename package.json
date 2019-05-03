@@ -29,8 +29,7 @@
       "git add"
     ],
     "*.sol": [
-      "solhint contracts/**/*.sol",
-      "prettier --write contracts/**/*.sol",
+      "prettier --write **/*.sol",
       "git add"
     ]
   },
