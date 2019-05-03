@@ -24,12 +24,13 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
+      "eslint --fix test/**/*.js",
       "prettier --write",
       "git add"
     ],
     "*.sol": [
-      "prettier --write **/*.sol",
+      "solhint contracts/**/*.sol",
+      "prettier --write contracts/**/*.sol",
       "git add"
     ]
   },
