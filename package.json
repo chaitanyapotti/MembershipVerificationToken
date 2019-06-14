@@ -11,7 +11,7 @@
     "stop:blockchain:client": "bash ./scripts/stop-blockchain.sh",
     "test": "npm run start:blockchain:client & truffle migrate --reset --compile-all && truffle test --network development",
     "post-test": "npm run stop:blockchain:client",
-    "coverage": "touch allFiredEvents & sudo ./node_modules/.bin/solidity-coverage",
+    "coverage": "touch allFiredEvents & solidity-coverage",
     "prettier": "prettier --write \"**/*.{js,json,css,md}\"",
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint:sol": "solhint contracts/**/*.sol",
