@@ -7,10 +7,12 @@
     "test": "test"
   },
   "scripts": {
-    "start:blockchain:client": "bash ./scripts/start-blockchain.sh",
-    "stop:blockchain:client": "bash ./scripts/stop-blockchain.sh",
-    "test": "npm run start:blockchain:client & truffle migrate --reset --compile-all && truffle test --network development",
-    "post-test": "npm run stop:blockchain:client",
+    "start:blockchain:client": ". ./scripts/start-blockchain.sh",
+    "stop:blockchain:client": ". ./scripts/stop-blockchain.sh",
+    "pretest": "npm run start:blockchain:client",
+    "test": "truffle migrate --reset --compile-all && truffle test --network development",
+    "posttest": "npm run stop:blockchain:client",
+    "precommit": "lint-staged && solhint \"contracts/*.sol\"",
     "coverage": "touch allFiredEvents & solidity-coverage",
     "prettier": "prettier --write \"**/*.{js,json,css,md}\"",
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
