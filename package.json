@@ -31,10 +31,11 @@
       "git add"
     ],
     "*.sol": [
+      "npm run lint:sol",
       "prettier --write **/*.sol",
       "git add"
     ],
-    "*.json": [
+    "*.{json,css}": [
       "prettier --write **/*.json",
       "git add"
     ]
@@ -89,7 +90,9 @@
     "husky": "^3.0.0",
     "lint-staged": "^9.0.0",
     "prettier": "^1.18.2",
+    "prettier-plugin-solidity": "^1.0.0-alpha.26",
     "solhint": "^2.1.0",
+    "solhint-plugin-prettier": "0.0.3",
     "solidity-coverage": "^0.5.11",
     "truffle": "^5.0.25"
   }

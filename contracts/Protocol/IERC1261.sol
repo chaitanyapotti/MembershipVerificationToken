@@ -1,11 +1,11 @@
 pragma solidity ^0.4.25;
 
-
 /// @title ERC-1261 MVT Standard
 /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
 ///  The constructor should define the attribute set for this MVT.
 ///  Note: the ERC-165 identifier for this interface is 0x1d8362cf.
-interface IERC1261 {/* is ERC173, ERC165 */
+interface IERC1261 {
+    /* is ERC173, ERC165 */
     /// @dev This emits when a token is assigned to a member.
     event Assigned(address indexed _to, uint[] attributeIndexes);
 
@@ -21,9 +21,16 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @dev This emits when a membership is requested by an user
     event RequestedMembership(address indexed _to);
 
-    /// @dev This emits when data of a member is modified. 
+    /// @dev This emits when data of a member is modified.
     ///  Doesn't emit when a new membership is created and data is assigned.
-    event ModifiedAttributes(address indexed _to, uint attributeIndex, uint prevValueIndex, bytes32 prevValue, uint modifiedValueIndex, bytes32 modifiedValue);
+    event ModifiedAttributes(
+        address indexed _to,
+        uint attributeIndex,
+        uint prevValueIndex,
+        bytes32 prevValue,
+        uint modifiedValueIndex,
+        bytes32 modifiedValue
+    );
 
     /// @notice Adds a new attribute (key, value) pair to the set of pre-existing attributes.
     /// @dev Adds a new attribute at the end of the array of attributes and maps it to `values`.
@@ -31,14 +38,18 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @param _name Name of the attribute which is to be added.
     /// @param values List of values of the specified attribute.
     function addAttributeSet(bytes32 _name, bytes32[] values) external;
-    
+
     /// @notice Modifies the attribute value of a specific attribute for a given `_to` address.
     /// @dev Use appropriate checks for whether a user/admin can modify the data.
     ///  Best practice is to use onlyOwner modifier from ERC173.
     /// @param _to The address whose attribute is being modified.
     /// @param _attributeIndex The index of attribute which is being modified.
     /// @param _modifiedValueIndex The index of the new value which is being assigned to the user attribute.
-    function modifyAttributeByIndex(address _to, uint _attributeIndex, uint _modifiedValueIndex) external;
+    function modifyAttributeByIndex(
+        address _to,
+        uint _attributeIndex,
+        uint _modifiedValueIndex
+    ) external;
 
     /// @notice Requests membership from any address.
     /// @dev Throws if the `msg.sender` already has the token.
@@ -92,7 +103,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
     ///  When transaction is complete, this function emits the Revoked event.
     /// @param _from The current owner of the MVT.
     function revokeFrom(address _from) external;
-    
+
     /// @notice Queries whether a member is a current member of the organization.
     /// @dev MVT's assigned to the zero address are considered invalid, and this
     ///  function throws for queries about the zero address.
@@ -100,11 +111,14 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @return Whether the member owns the token.
     function isCurrentMember(address _to) external view returns (bool);
 
-     /// @notice Gets the value collection of an attribute.
+    /// @notice Gets the value collection of an attribute.
     /// @dev Returns the values of attributes as a bytes32 array.
     /// @param _index Index of the attribute whose values are to be fetched
     /// @return The values of attributes.
-    function getAttributeExhaustiveCollection(uint _index) external view returns (bytes32[]);
+    function getAttributeExhaustiveCollection(uint _index)
+        external
+        view
+        returns (bytes32[]);
 
     /// @notice Returns the list of all past and present members.
     /// @dev Use this function along with isCurrentMember to find wasMemberOf() in Js.
@@ -118,7 +132,7 @@ interface IERC1261 {/* is ERC173, ERC165 */
     function getCurrentMemberCount() external view returns (uint);
 
     /// @notice Returns the list of all attribute names.
-    /// @dev Returns the names of attributes as a bytes32 array. 
+    /// @dev Returns the names of attributes as a bytes32 array.
     ///  AttributeNames are stored in a bytes32 Array.
     ///  Possible values for each attributeName are stored in a mapping(attributeName => attributeValues).
     ///  AttributeName is bytes32 and attributeValues is bytes32[].
@@ -142,14 +156,17 @@ interface IERC1261 {/* is ERC173, ERC165 */
     /// @param _to The address whose attribute is requested.
     /// @param _attributeIndex The attribute Index which is required.
     /// @return The attribute value at the specified name.
-    function getAttributeByIndex(address _to, uint _attributeIndex) external view returns (uint);    
+    function getAttributeByIndex(address _to, uint _attributeIndex)
+        external
+        view
+        returns (uint);
 }
-
 
 /// @title ERC-1261 Membership Verification Token Standard, optional metadata extension
 /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1261.md
 ///  Note: the ERC-1261 identifier for this interface is 0x93254542.
-interface IERC1261Metadata {/* is ERC1261 */
+interface IERC1261Metadata {
+    /* is ERC1261 */
     /// @notice A descriptive name for a collection of MTs in this contract.
     function name() external view returns (bytes32);
 
