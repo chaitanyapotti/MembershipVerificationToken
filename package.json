@@ -27,11 +27,11 @@
   "lint-staged": {
     "*.js": [
       "npm run lint:js --",
-      "prettier --write",
+      "prettier --write **/*.js",
       "git add"
     ],
     "*.sol": [
-      "npm run lint:sol",
+      "npm run lint:sol --",
       "git add"
     ],
     "*.{json,css}": [
