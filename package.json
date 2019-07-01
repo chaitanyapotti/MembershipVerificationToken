@@ -16,7 +16,7 @@
     "coverage": "touch allFiredEvents & solidity-coverage",
     "prettier": "prettier --write \"**/*.{js,json,css,md}\"",
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
-    "lint:sol": "solhint contracts/**/*.sol",
+    "lint:sol": "prettier --write contracts/**/*.sol",
     "lint:js": "eslint --fix test/**/*.js"
   },
   "greenkeeper": {
@@ -32,7 +32,6 @@
     ],
     "*.sol": [
       "npm run lint:sol",
-      "prettier --write **/*.sol",
       "git add"
     ],
     "*.{json,css}": [
