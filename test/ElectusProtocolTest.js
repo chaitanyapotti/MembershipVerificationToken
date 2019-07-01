@@ -5,14 +5,8 @@ contract("ElectusProtocol", function(accounts) {
   let electusProtocol;
   beforeEach("setup", async () => {
     electusProtocol = await ElectusProtocol.new();
-    await electusProtocol.addAttributeSet("0x68616972", [
-      "0x626c61636b",
-      "0x7768697465"
-    ]);
-    await electusProtocol.addAttributeSet("0x736b696e", [
-      "0x626c61636b",
-      "0x7768697465"
-    ]);
+    await electusProtocol.addAttributeSet("0x68616972", ["0x626c61636b", "0x7768697465"]);
+    await electusProtocol.addAttributeSet("0x736b696e", ["0x626c61636b", "0x7768697465"]);
     await electusProtocol.assignTo(accounts[1], [0, 0], {from: accounts[0]});
   });
   it("he is a current member", async () => {
@@ -36,11 +30,7 @@ contract("ElectusProtocol", function(accounts) {
   it("list of attributes Names", async () => {
     const data = await electusProtocol.getAttributeNames();
     // eslint-disable-next-line no-control-regex
-    assert.equal(
-      web3.utils.toAscii(data[1]).replace(/\u0000/g, ""),
-      "skin",
-      32
-    );
+    assert.equal(web3.utils.toAscii(data[1]).replace(/\u0000/g, ""), "skin", 32);
   });
   it("list of attributes of a member", async () => {
     const data = await electusProtocol.getAttributes(accounts[1]);
@@ -53,57 +43,35 @@ contract("ElectusProtocol", function(accounts) {
     assert.equal(web3.utils.toDecimal(data), 0);
   });
   it("adds a set of attributes", async () => {
-    await electusProtocol.addAttributeSet(web3.utils.fromAscii("height"), [
-      web3.utils.fromAscii("5"),
-      web3.utils.fromAscii("6")
-    ]);
+    await electusProtocol.addAttributeSet(web3.utils.fromAscii("height"), [web3.utils.fromAscii("5"), web3.utils.fromAscii("6")]);
     const data = await electusProtocol.getAttributeNames();
     // eslint-disable-next-line no-control-regex
-    assert.equal(
-      web3.utils.toAscii(data[2]).replace(/\u0000/g, ""),
-      "height",
-      32
-    );
+    assert.equal(web3.utils.toAscii(data[2]).replace(/\u0000/g, ""), "height", 32);
   });
   it("modifies attribute by index", async () => {
-    const result = await electusProtocol.modifyAttributeByIndex(
-      accounts[1],
-      0,
-      0
-    );
+    const result = await electusProtocol.modifyAttributeByIndex(accounts[1], 0, 0);
     const data = await electusProtocol.getAttributes(accounts[1]);
     truffleAssert.eventEmitted(result, "ModifiedAttributes");
     // eslint-disable-next-line no-control-regex
     assert.deepEqual(data.map(item => web3.utils.toDecimal(item)), [0, 0]);
   });
   it("request memebership", async () => {
-    const requestedMembership = await electusProtocol.requestMembership(
-      [0, 0],
-      {
-        from: accounts[2]
-      }
-    );
+    const requestedMembership = await electusProtocol.requestMembership([0, 0], {
+      from: accounts[2]
+    });
     const data = await electusProtocol.isCurrentMember(accounts[2]);
-    const isMembershipPending = await electusProtocol.pendingRequests(
-      accounts[2]
-    );
+    const isMembershipPending = await electusProtocol.pendingRequests(accounts[2]);
     assert.equal(isMembershipPending, true);
     assert.equal(data, false);
     truffleAssert.eventEmitted(requestedMembership, "RequestedMembership");
   });
   it("request and approve memebership", async () => {
-    const requestedMembership = await electusProtocol.requestMembership(
-      [0, 0],
-      {
-        from: accounts[2]
-      }
-    );
-    const approvedMembership = await electusProtocol.approveRequest(
-      accounts[2],
-      {
-        from: accounts[0]
-      }
-    );
+    const requestedMembership = await electusProtocol.requestMembership([0, 0], {
+      from: accounts[2]
+    });
+    const approvedMembership = await electusProtocol.approveRequest(accounts[2], {
+      from: accounts[0]
+    });
     const data = await electusProtocol.isCurrentMember(accounts[2]);
     assert.equal(data, true);
     const attr = await electusProtocol.getAttributes(accounts[2]);
@@ -113,18 +81,13 @@ contract("ElectusProtocol", function(accounts) {
     truffleAssert.eventEmitted(approvedMembership, "ApprovedMembership");
   });
   it("discard memebership request", async () => {
-    const requestedMembership = await electusProtocol.requestMembership(
-      [0, 0],
-      {
-        from: accounts[2]
-      }
-    );
+    const requestedMembership = await electusProtocol.requestMembership([0, 0], {
+      from: accounts[2]
+    });
     await electusProtocol.discardRequest(accounts[2], {
       from: accounts[0]
     });
-    const isMembershipPending = await electusProtocol.pendingRequests(
-      accounts[2]
-    );
+    const isMembershipPending = await electusProtocol.pendingRequests(accounts[2]);
     const data = await electusProtocol.isCurrentMember(accounts[2]);
     assert.equal(isMembershipPending, false);
     assert.equal(data, false);
