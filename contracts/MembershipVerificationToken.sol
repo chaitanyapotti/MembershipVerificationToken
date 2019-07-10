@@ -144,7 +144,7 @@ contract MembershipVerificationToken is IERC1261, Ownable, ERC165 {
     }
 
     function getAttributes(address _to) external view returns (uint[]) {
-        require(_to != address(0));
+        require(_to != address(0), "Address cannot be zero");
         return currentHolders[_to].data;
     }
 
