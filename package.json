@@ -1,6 +1,6 @@
 {
   "name": "membershipverificationtoken",
-  "version": "2.5.7",
+  "version": "2.5.8",
   "description": "Standard Implementation and interface for Membership Verification Token",
   "main": "truffle-config.js",
   "directories": {
