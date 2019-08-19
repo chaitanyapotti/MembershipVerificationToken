@@ -5,6 +5,10 @@ contract("ElectusProtocol", function(accounts) {
   let electusProtocol;
   beforeEach("setup", async () => {
     electusProtocol = await ElectusProtocol.new();
+
+    // 0x626c61636b = hair
+    // 0x626c61636b = black
+    // 0x7768697465 = white
     await electusProtocol.addAttributeSet("0x68616972", ["0x626c61636b", "0x7768697465"]);
     await electusProtocol.addAttributeSet("0x736b696e", ["0x626c61636b", "0x7768697465"]);
     await electusProtocol.assignTo(accounts[1], [0, 0], {from: accounts[0]});
