@@ -74,7 +74,7 @@
   "dependencies": {
     "ganache-cli": "^6.6.0",
     "openzeppelin-solidity": "2.0.0",
-    "truffle-assertions": "^0.9.1"
+    "truffle-assertions": "^0.9.2"
   },
   "devDependencies": {
     "eslint": "^6.2.0",
